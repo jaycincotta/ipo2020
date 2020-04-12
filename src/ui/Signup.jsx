@@ -12,8 +12,8 @@ export default function Signup() {
   const searchByName = useVoterData(
     "SearchByName",
     {
-      firstName: voter.firstName,
-      lastName: voter.lastName ? voter.lastName.substr(0, 1) : "",
+      firstName: voter.firstName ? voter.firstName.substr(0, 1) : "",
+      lastName: voter.lastName,
       birthYear: voter.birthYear
     },
     nameAvailable
