@@ -5,6 +5,13 @@ import useVoterData from "../hooks/useVoterData";
 import useLocalStorage from "../hooks/useLocalStorage";
 import FetchViewer from "./FetchViewer";
 
+function VerifyVoterInfo({ firstName, lastName, birthYear }) {
+  const baseUrl = "https://secure.sos.state.or.us/orestar/vr/showVoterSearch.do?lang=eng&source=SOS";
+  const parameters = `&identifier2=${firstName}&identifier3=${lastName}&identifier8=${birthYear}`;
+  const url = baseUrl + parameters;
+  window.open(url, "myvote");
+}
+
 export default function Signup() {
   const [voter, setVoter] = useState({});
   const nameAvailable = voter.firstName && voter.lastName && voter.birthYear;
@@ -116,6 +123,10 @@ export default function Signup() {
               />
               <button type="submit" disabled={isSubmitting}>
                 Submit
+              </button>
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" disabled={isSubmitting} onClick={() => VerifyVoterInfo(values)}>
+                Verify Voter Info
               </button>
               <br />
               <FetchViewer name="FindByName" result={findByName} />
