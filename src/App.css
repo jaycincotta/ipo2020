@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+/*****************************************************/
+
+.page {
+  margin-top: 8px;
+  margin-left: 24px;
+  font-family: "Roboto";
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+label > strong {
+  color: #f06721;
+}
+
+label {
+  display: block;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+button {
+  margin-top: 18px;
+}
