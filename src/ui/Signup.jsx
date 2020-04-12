@@ -7,7 +7,17 @@ import FetchViewer from "./FetchViewer";
 
 export default function Signup() {
   const [voter, setVoter] = useState({});
-  const result = useVoterData("SearchByName", voter);
+  const nameAvailable = voter.firstName && voter.lastName && voter.birthYear;
+  const findByName = useVoterData("FindByName", voter, nameAvailable);
+  const searchByName = useVoterData(
+    "SearchByName",
+    {
+      firstName: voter.firstName,
+      lastName: voter.lastName ? voter.lastName.substr(0, 1) : "",
+      birthYear: voter.birthYear
+    },
+    nameAvailable
+  );
 
   const initialValues = {
     firstName: "",
@@ -108,7 +118,8 @@ export default function Signup() {
                 Submit
               </button>
               <br />
-              <FetchViewer name="FindByName" result={result} />
+              <FetchViewer name="FindByName" result={findByName} />
+              <FetchViewer name="SearchByName" result={searchByName} />
             </Form>
           </div>
         );
