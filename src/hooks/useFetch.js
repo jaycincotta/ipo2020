@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 
-export default function useFetch(url, options, refreshTrigger, callback, disabled) {
+export default function useFetch(url, options) {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const dependencies = Array.isArray(refreshTrigger) ? refreshTrigger : [refreshTrigger];
+
+  const refreshTrigger = null;
+  const callback = null;
+  const disabled = false;
 
   useEffect(() => {
     setResponse(null);
@@ -36,6 +39,6 @@ export default function useFetch(url, options, refreshTrigger, callback, disable
       // If no url, there's nothing to fetch
       fetchData();
     }
-  }, dependencies);
+  }, [url, options, refreshTrigger, callback, disabled]);
   return { response, error, isLoading };
 }

@@ -5,9 +5,5 @@ export default function useVoterData(method, parameters) {
   const keys = Object.keys(parameters);
   const arglist = keys.map(key => `${key}=${parameters[key]}`).join("&");
   const url = arglist ? `${baseUrl}&${arglist}` : null;
-  console.log(keys, arglist, url);
-  const refreshTrigger = parameters;
-  const callback = () => console.log("callback");
-  const disabled = false;
-  return useFetch(url, null, refreshTrigger, callback, disabled);
+  return useFetch(url);
 }

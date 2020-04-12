@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import useVoterData from "../hooks/useVoterData";
 import useLocalStorage from "../hooks/useLocalStorage";
+import FetchViewer from "./FetchViewer";
 
 export default function Signup() {
   const [voter, setVoter] = useState({});
@@ -106,11 +107,8 @@ export default function Signup() {
               <button type="submit" disabled={isSubmitting}>
                 Submit
               </button>
-              {isSubmitting && (
-                <div>
-                  <i>Submitting...</i>
-                </div>
-              )}
+              <br />
+              <FetchViewer name="FindByName" result={result} />
             </Form>
           </div>
         );
@@ -118,12 +116,5 @@ export default function Signup() {
     </Formik>
   );
 
-  return (
-    <div className="page">
-      {form}
-      <div>
-        <pre>{JSON.stringify(result, null, 2)}</pre>
-      </div>
-    </div>
-  );
+  return form;
 }
