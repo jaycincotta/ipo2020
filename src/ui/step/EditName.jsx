@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import useVoterData from "../hooks/useVoterData";
-import useLocalStorage from "../hooks/useLocalStorage";
-import FetchViewer from "./FetchViewer";
-
-const wizardSteps = ["welcome", "editName", "confirmName", "editAddress", "confirmAddres", "finalize", "thankyou"];
+import useVoterData from "../../hooks/useVoterData";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import FetchViewer from "../FetchViewer";
+import FormField from "../FormField";
 
 function VerifyVoterInfo({ firstName, lastName, birthYear }) {
   const baseUrl = "https://secure.sos.state.or.us/orestar/vr/showVoterSearch.do?lang=eng&source=SOS";
@@ -14,7 +13,7 @@ function VerifyVoterInfo({ firstName, lastName, birthYear }) {
   window.open(url, "myvote");
 }
 
-export default function Signup() {
+export default function EditName({ next }) {
   const [voter, setVoter] = useState({});
   const nameAvailable = voter.firstName && voter.lastName && voter.birthYear;
   const findByName = useVoterData("FindByName", voter, nameAvailable);
@@ -44,25 +43,6 @@ export default function Signup() {
     birthYear: Yup.string().required("Birth year is required")
   };
   const inputSchema = Yup.object().shape(validations);
-
-  const FormField = ({ name, required, caption, type, component, placeholder, errors, touched, tabIndex }) => (
-    <>
-      <label htmlFor={name}>
-        {caption}
-        {required && <strong>*</strong>}
-      </label>
-      <ErrorMessage name={name} className="error" component="div" />
-      <Field
-        component={component || "input"}
-        type={type || "text"}
-        name={name}
-        placeholder={placeholder}
-        className={errors[name] && touched[name] ? "text-input error" : "text-input"}
-        tabIndex={tabIndex}
-      />
-      <br />
-    </>
-  );
 
   const form = (
     <Formik
@@ -124,11 +104,15 @@ export default function Signup() {
                 touched={touched}
               />
               <button type="submit" disabled={isSubmitting}>
-                Submit
+                Check IPO Voter File
               </button>
               &nbsp;&nbsp;&nbsp;
               <button type="button" disabled={isSubmitting} onClick={() => VerifyVoterInfo(values)}>
-                Verify Voter Info
+                Verify Voter Info on OreStar My Vote
+              </button>
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" disabled={isSubmitting} onClick={() => next()}>
+                Continue
               </button>
               <br />
               <FetchViewer name="FindByName" result={findByName} />

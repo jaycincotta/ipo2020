@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import "./App.css";
 import useLocalStorage from "./hooks/useLocalStorage";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
 import RepeatVoter from "./ui/step/RepeatVoter";
+import EditName from "./ui/step/EditName";
+import EditAddress from "./ui/step/EditAddress";
+
+// Wizard-Related stuff
 
 const WELCOME_STEP = 0;
+const EDIT_NAME_STEP = 1;
+const EDIT_ADDRESS_STEP = 2;
 const THANKYOU_STEP = 9;
 const REPEAT_VISITOR_STEP = -1;
 
@@ -20,6 +28,14 @@ export default function App() {
     GoTo(WELCOME_STEP);
   };
 
+  const GoToEditName = () => {
+    GoTo(EDIT_NAME_STEP);
+  };
+
+  const GoToEditAddress = () => {
+    GoTo(EDIT_ADDRESS_STEP);
+  };
+
   const GoToThankyou = () => {
     GoTo(THANKYOU_STEP);
   };
@@ -27,6 +43,17 @@ export default function App() {
   const GoToSurvey = () => {
     setStep(REPEAT_VISITOR_STEP);
     window.location = "https://star.vote/startrek/";
+  };
+
+  // Voter Data
+
+  const [voter, setVoter] = useState({});
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    birthYear: "",
+    houseNum: "",
+    zipcode: ""
   };
 
   return (
@@ -37,7 +64,9 @@ export default function App() {
         and Statewide Primary Election
       </h1>
       {step === REPEAT_VISITOR_STEP && <RepeatVoter next={GoToWelcome} />}
-      {step === WELCOME_STEP && <Welcome next={GoToThankyou} />}
+      {step === WELCOME_STEP && <Welcome next={GoToEditName} />}
+      {step === EDIT_NAME_STEP && <EditName next={GoToEditAddress} />}
+      {step === EDIT_ADDRESS_STEP && <EditAddress next={GoToThankyou} />}
       {step === THANKYOU_STEP && <Thankyou next={GoToSurvey} />}
       <br />
       <hr />
