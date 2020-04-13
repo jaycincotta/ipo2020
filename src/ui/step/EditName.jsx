@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import useVoterData from "../../hooks/useVoterData";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import FetchViewer from "../FetchViewer";
 import FormField from "../FormField";
 
@@ -13,30 +11,8 @@ function VerifyVoterInfo({ firstName, lastName, birthYear }) {
   window.open(url, "myvote");
 }
 
-export default function EditName({ next }) {
-  const [voter, setVoter] = useState({});
-  const nameAvailable = voter.firstName && voter.lastName && voter.birthYear;
-  const findByName = useVoterData("FindByName", voter, nameAvailable);
-  const searchByName = useVoterData(
-    "SearchByName",
-    {
-      firstName: voter.firstName ? voter.firstName.substr(0, 1) : "",
-      lastName: voter.lastName,
-      birthYear: voter.birthYear
-    },
-    nameAvailable
-  );
-
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    birthYear: "",
-    birthDate: "",
-    address: "",
-    city: "",
-    zipcode: ""
-  };
-  const [formData, setFormData] = useLocalStorage("formData", initialValues);
+export default function EditName({ next, formData, setFormData, findByName, searchByName }) {
+  console.log("EditName", formData);
   const validations = {
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
@@ -53,9 +29,13 @@ export default function EditName({ next }) {
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          console.log("Submit");
-          setFormData(values);
-          setVoter({ firstName: values.firstName, lastName: values.lastName, birthYear: values.birthYear });
+          console.log("Submit", formData, values);
+          setFormData({
+            ...formData,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            birthYear: values.birthYear
+          });
         } catch (error) {
           console.log("Error", error);
         }

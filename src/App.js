@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
+import useVoterData from "./hooks/useVoterData";
 import useLocalStorage from "./hooks/useLocalStorage";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
 import RepeatVoter from "./ui/step/RepeatVoter";
@@ -46,8 +45,6 @@ export default function App() {
   };
 
   // Voter Data
-
-  const [voter, setVoter] = useState({});
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -55,6 +52,46 @@ export default function App() {
     houseNum: "",
     zipcode: ""
   };
+  const [formData, setFormData] = useLocalStorage("formData", initialValues);
+
+  const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
+  const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
+
+  const findByName = useVoterData(
+    "FindByName",
+    {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      birthYear: formData.birthYear
+    },
+    nameAvailable
+  );
+  const searchByName = useVoterData(
+    "SearchByName",
+    {
+      firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
+      lastName: formData.lastName,
+      birthYear: formData.birthYear
+    },
+    nameAvailable
+  );
+  const findByAddress = useVoterData(
+    "FindByAddress",
+    {
+      houseNum: formData.houseNum,
+      zipcode: formData.zipcode,
+      birthYear: formData.birthYear
+    },
+    addressAvailale
+  );
+  const searchByAddress = useVoterData(
+    "SearchByAddress",
+    {
+      houseNum: formData.houseNum,
+      zipcode: formData.zipcode
+    },
+    addressAvailale
+  );
 
   return (
     <div className="page">
@@ -65,8 +102,24 @@ export default function App() {
       </h1>
       {step === REPEAT_VISITOR_STEP && <RepeatVoter next={GoToWelcome} />}
       {step === WELCOME_STEP && <Welcome next={GoToEditName} />}
-      {step === EDIT_NAME_STEP && <EditName next={GoToEditAddress} />}
-      {step === EDIT_ADDRESS_STEP && <EditAddress next={GoToThankyou} />}
+      {step === EDIT_NAME_STEP && (
+        <EditName
+          next={GoToEditAddress}
+          formData={formData}
+          setFormData={setFormData}
+          findByName={findByName}
+          searchByName={searchByName}
+        />
+      )}
+      {step === EDIT_ADDRESS_STEP && (
+        <EditAddress
+          next={GoToThankyou}
+          formData={formData}
+          setFormData={setFormData}
+          findByAddress={findByAddress}
+          searchByAddress={searchByAddress}
+        />
+      )}
       {step === THANKYOU_STEP && <Thankyou next={GoToSurvey} />}
       <br />
       <hr />
