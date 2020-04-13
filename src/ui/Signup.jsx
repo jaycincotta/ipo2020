@@ -5,6 +5,8 @@ import useVoterData from "../hooks/useVoterData";
 import useLocalStorage from "../hooks/useLocalStorage";
 import FetchViewer from "./FetchViewer";
 
+const wizardSteps = ["welcome", "editName", "confirmName", "editAddress", "confirmAddres", "finalize", "thankyou"];
+
 function VerifyVoterInfo({ firstName, lastName, birthYear }) {
   const baseUrl = "https://secure.sos.state.or.us/orestar/vr/showVoterSearch.do?lang=eng&source=SOS";
   const parameters = `&identifier2=${firstName}&identifier3=${lastName}&identifier8=${birthYear}`;
