@@ -98,12 +98,9 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                 errors={errors}
                 touched={touched}
               />
-              {findByName.isLoading && (
-                <p>
-                  <i>Verifying...</i>
-                </p>
-              )}
-              {invalidated && <p className="error">Are you sure?</p>}
+              {validated && <p className="valid">Name and date of birth validated.</p>}
+              {findByName.isLoading && <p className="validating">Validating...</p>}
+              {invalidated && <p className="invalid">Are you sure?</p>}
               {!validated && !invalidated && !isSubmitting && !findByName.isLoading && (
                 <button type="submit">Validate</button>
               )}
