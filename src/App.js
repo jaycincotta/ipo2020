@@ -5,54 +5,62 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
 import RepeatVoter from "./ui/step/RepeatVoter";
+import EditEmail from "./ui/step/EditEmail";
 import EditName from "./ui/step/EditName";
 import EditAddress from "./ui/step/EditAddress";
+import MyVoteURL from "./MyVoteURL";
 
 // Wizard-Related stuff
 
-const WELCOME_STEP = 0;
-const EDIT_NAME_STEP = 1;
-const EDIT_ADDRESS_STEP = 2;
-const THANKYOU_STEP = 9;
-const REPEAT_VISITOR_STEP = -1;
+const WELCOME = 0;
+const EDIT_EMAIL = 1;
+const EDIT_NAME = 2;
+const EDIT_ADDRESS = 3;
+const THANKYOU = 9;
+const REPEAT_VISITOR = -1;
 
 export default function App() {
-  const [step, setStep] = useLocalStorage("currentStep", WELCOME_STEP);
+  const [step, setStep] = useLocalStorage("ipo2020-currentStep", WELCOME);
 
   const GoTo = step => {
     setStep(step);
   };
 
   const GoToWelcome = () => {
-    GoTo(WELCOME_STEP);
+    GoTo(WELCOME);
+  };
+
+  const GoToEditEmail = () => {
+    GoTo(EDIT_EMAIL);
   };
 
   const GoToEditName = () => {
-    GoTo(EDIT_NAME_STEP);
+    GoTo(EDIT_NAME);
   };
 
   const GoToEditAddress = () => {
-    GoTo(EDIT_ADDRESS_STEP);
+    GoTo(EDIT_ADDRESS);
   };
 
   const GoToThankyou = () => {
-    GoTo(THANKYOU_STEP);
+    GoTo(THANKYOU);
   };
 
   const GoToSurvey = () => {
-    setStep(REPEAT_VISITOR_STEP);
+    setStep(REPEAT_VISITOR);
     window.location = "https://star.vote/startrek/";
   };
 
   // Voter Data
   const initialValues = {
+    email: "",
     firstName: "",
     lastName: "",
     birthYear: "",
     houseNum: "",
     zipcode: ""
   };
-  const [formData, setFormData] = useLocalStorage("formData", initialValues);
+  const [formData, setFormData] = useLocalStorage("ipo2020-formData", initialValues);
 
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
   const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
@@ -66,15 +74,15 @@ export default function App() {
     },
     nameAvailable
   );
-  const searchByName = useVoterData(
-    "SearchByName",
-    {
-      firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
-      lastName: formData.lastName,
-      birthYear: formData.birthYear
-    },
-    nameAvailable
-  );
+  // const searchByName = useVoterData(
+  //   "SearchByName",
+  //   {
+  //     firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
+  //     lastName: formData.lastName,
+  //     birthYear: formData.birthYear
+  //   },
+  //   nameAvailable
+  // );
   const findByAddress = useVoterData(
     "FindByAddress",
     {
@@ -84,14 +92,16 @@ export default function App() {
     },
     addressAvailale
   );
-  const searchByAddress = useVoterData(
-    "SearchByAddress",
-    {
-      houseNum: formData.houseNum,
-      zipcode: formData.zipcode
-    },
-    addressAvailale
-  );
+  // const searchByAddress = useVoterData(
+  //   "SearchByAddress",
+  //   {
+  //     houseNum: formData.houseNum,
+  //     zipcode: formData.zipcode
+  //   },
+  //   addressAvailale
+  // );
+
+  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthYear);
 
   return (
     <div className="page">
@@ -100,31 +110,29 @@ export default function App() {
         <br />
         and Statewide Primary Election
       </h1>
-      {step === REPEAT_VISITOR_STEP && <RepeatVoter next={GoToWelcome} />}
-      {step === WELCOME_STEP && <Welcome next={GoToEditName} />}
-      {step === EDIT_NAME_STEP && (
-        <EditName
-          next={GoToEditAddress}
-          formData={formData}
-          setFormData={setFormData}
-          findByName={findByName}
-          searchByName={searchByName}
-        />
+      {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
+      {step === WELCOME && <Welcome next={GoToEditEmail} />}
+      {step === EDIT_EMAIL && <EditEmail next={GoToEditName} formData={formData} setFormData={setFormData} />}
+      {step === EDIT_NAME && (
+        <EditName next={GoToEditAddress} formData={formData} setFormData={setFormData} findByName={findByName} />
       )}
-      {step === EDIT_ADDRESS_STEP && (
+      {step === EDIT_ADDRESS && (
         <EditAddress
           next={GoToThankyou}
           formData={formData}
           setFormData={setFormData}
+          findByName={findByName}
           findByAddress={findByAddress}
-          searchByAddress={searchByAddress}
         />
       )}
-      {step === THANKYOU_STEP && <Thankyou next={GoToSurvey} />}
+      {step === THANKYOU && <Thankyou next={GoToSurvey} />}
       <br />
       <hr />
       <p>
-        If you have questions, you can reach us at <a href="mailto:support@equal.vote">support@equal.vote</a>
+        <a href={myVoteURL} target="MyVote">
+          Verify My Voter Record
+        </a>{" "}
+        | <a href="mailto:support@equal.vote">Email Support</a>
       </p>
     </div>
   );

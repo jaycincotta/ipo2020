@@ -4,18 +4,23 @@ import * as Yup from "yup";
 import FetchViewer from "../FetchViewer";
 import FormField from "../FormField";
 
-function VerifyVoterInfo({ firstName, lastName, birthYear }) {
-  const baseUrl = "https://secure.sos.state.or.us/orestar/vr/showVoterSearch.do?lang=eng&source=SOS";
-  const parameters = `&identifier2=${firstName}&identifier3=${lastName}&identifier8=${birthYear}`;
-  const url = baseUrl + parameters;
-  window.open(url, "myvote");
-}
-
-export default function EditAddress({ next, formData, setFormData, findByAddress, searchByAddress }) {
+export default function EditAddress({ next, formData, setFormData, findByName, findByAddress }) {
   console.log("EditAddress", formData);
+  const [editing, setEditing] = useState(false);
+
   const validations = {
-    houseNum: Yup.string().required("House number is required"),
-    zipcode: Yup.string().required("Zipcode is required")
+    houseNum: Yup.number()
+      .typeError("House number must be a... number")
+      .required("House number is required")
+      .integer()
+      .min(1)
+      .max(99999),
+    zipcode: Yup.number()
+      .typeError("Please enter your zipcode")
+      .required("Zipcode is required")
+      .integer()
+      .min(97001)
+      .max(97920)
   };
   const inputSchema = Yup.object().shape(validations);
 
@@ -23,12 +28,14 @@ export default function EditAddress({ next, formData, setFormData, findByAddress
     <Formik
       validate={(values, props) => {
         console.log("validate", values);
+        setEditing(true);
       }}
-      initialValues={formData}
+      initialValues={{ houseNum: formData.houseNum, zipcode: formData.zipcode }}
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           console.log("Submit");
+          setEditing(false);
           setFormData({
             ...formData,
             houseNum: values.houseNum,
@@ -54,6 +61,17 @@ export default function EditAddress({ next, formData, setFormData, findByAddress
         //handleSubmit,
         //handleReset,
       }) => {
+        const validated =
+          findByAddress.response &&
+          findByAddress.response.length === 1 &&
+          formData.houseNum === values.houseNum &&
+          formData.zipcode === values.zipcode &&
+          findByName.response &&
+          findByName.response.length === 1 &&
+          findByName.response[0].VoterId === findByAddress.response[0].VoterId;
+
+        const invalidated = !editing && findByAddress.response && findByAddress.response.length !== 1;
+
         return (
           <div>
             <Form>
@@ -73,20 +91,25 @@ export default function EditAddress({ next, formData, setFormData, findByAddress
                 errors={errors}
                 touched={touched}
               />
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-              &nbsp;&nbsp;&nbsp;
-              <button type="button" disabled={isSubmitting} onClick={() => VerifyVoterInfo(values)}>
-                Verify Voter Info
-              </button>
-              &nbsp;&nbsp;&nbsp;
-              <button type="button" disabled={isSubmitting} onClick={() => next()}>
-                Continue
-              </button>
-              <br />
-              <FetchViewer name="FindByAddress" result={findByAddress} />
-              <FetchViewer name="SearchByAddress" result={searchByAddress} />
+              {findByAddress.isLoading && (
+                <p>
+                  <i>Verifying...</i>
+                </p>
+              )}
+              {invalidated && <p class="error">Are you sure?</p>}
+              {!validated && !invalidated && !isSubmitting && !findByAddress.isLoading && (
+                <button type="submit">Validate</button>
+              )}
+              {validated && (
+                <button type="button" onClick={() => next()}>
+                  Continue
+                </button>
+              )}
+              {invalidated && (
+                <button type="button" onClick={() => next()}>
+                  Yes, I'm sure
+                </button>
+              )}
             </Form>
           </div>
         );
