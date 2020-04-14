@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Verify({ next, prev, restart, searchByName, searchByAddress }) {
+export default function Verify({ next, prev, restart, formData, setFormData, searchByName, searchByAddress }) {
   const validated =
     searchByAddress.response &&
     searchByAddress.response.length === 1 &&
@@ -14,6 +14,15 @@ export default function Verify({ next, prev, restart, searchByName, searchByAddr
       Email: email,
       ...voterInfo
     };
+  }
+  function Confirm(next) {
+    setFormData({
+      ...formData,
+      voterId: voterInfo.VoterId,
+      address: voterInfo.Address1,
+      city: voterInfo.City
+    });
+    next();
   }
   return (
     <div>
@@ -41,7 +50,7 @@ export default function Verify({ next, prev, restart, searchByName, searchByAddr
         </>
       )}
       {(searchByName.isLoading || searchByAddress.isLoading) && <p>Loading...</p>}
-      <button type="button" onClick={() => next()}>
+      <button type="button" onClick={() => Confirm(next)}>
         CONFIRM
       </button>
       &nbsp;&nbsp;&nbsp;

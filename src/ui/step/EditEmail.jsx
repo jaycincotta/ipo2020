@@ -5,21 +5,25 @@ import FormField from "../FormField";
 
 export default function EditEmail({ next, formData, setFormData }) {
   console.log("EditEmail", formData);
+  const phoneRegExp = /^(\+?(011[. -]?)?\+?52[. -]?([0-9]{3}[. -]?[0-9]{3}[. -]?[0-9]{4}|[0-9]{2}[. -]?[0-9]{4}[. -]?[0-9]{4})|(\+?(1[. -]?)?(\(?[0-9]{3}\)?[. -]?[0-9]{3}[. -]?[0-9]{4})))(\s?(x|ext|ext.)\s?[0-9]{1,5})?$/;
+
   const validations = {
-    email: Yup.string().required("Email address is required").email("Invalid email")
+    email: Yup.string().required("Email address is required").email("Invalid email"),
+    phone: Yup.string().required("Phone number is required").matches(phoneRegExp, "Phone number is not valid")
   };
   const inputSchema = Yup.object().shape(validations);
 
   const form = (
     <Formik
-      initialValues={{ email: formData.email }}
+      initialValues={{ email: formData.email, phone: formData.phone }}
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           console.log("Submit");
           setFormData({
             ...formData,
-            email: values.email
+            email: values.email,
+            phone: values.phone
           });
           setTimeout(() => next(), 0);
         } catch (error) {
@@ -51,6 +55,15 @@ export default function EditEmail({ next, formData, setFormData }) {
                 required
                 caption="Email Address"
                 placeholder="Email"
+                errors={errors}
+                touched={touched}
+                setFieldTouched={setFieldTouched}
+              />
+              <FormField
+                name="phone"
+                required
+                caption="Phone Number"
+                placeholder="Phone"
                 errors={errors}
                 touched={touched}
                 setFieldTouched={setFieldTouched}

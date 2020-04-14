@@ -64,12 +64,17 @@ export default function App() {
 
   // Voter Data
   const initialValues = {
+    voterId: "",
     email: "",
+    phone: "",
     firstName: "",
     lastName: "",
+    birthDate: "",
     birthYear: "",
     houseNum: "",
-    zipcode: ""
+    zipcode: "",
+    address: "",
+    city: ""
   };
   const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
 
@@ -154,6 +159,8 @@ export default function App() {
           next={GoToThankyou}
           prev={GoToEditAddress}
           restart={GoToEditEmail}
+          formData={formData}
+          setFormData={setFormData}
           searchByName={searchByName}
           searchByAddress={searchByAddress}
         />
