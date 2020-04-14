@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import useVoterData from "./hooks/useVoterData";
 import useLocalStorage from "./hooks/useLocalStorage";
@@ -10,6 +10,10 @@ import EditName from "./ui/step/EditName";
 import EditAddress from "./ui/step/EditAddress";
 import Verify from "./ui/step/Verify";
 import MyVoteURL from "./MyVoteURL";
+import FetchViewer from "./ui/FetchViewer";
+
+const CURRENT_STEP_KEY = "ipo2020-currentStep";
+const FORM_DATA_KEY = "ipo2020-formData";
 
 // Wizard-Related stuff
 
@@ -22,7 +26,8 @@ const THANKYOU = 9;
 const REPEAT_VISITOR = -1;
 
 export default function App() {
-  const [step, setStep] = useLocalStorage("ipo2020-currentStep", WELCOME);
+  const [debugMode, setDebugMode] = useState(false);
+  const [step, setStep] = useLocalStorage(CURRENT_STEP_KEY, WELCOME);
 
   const GoTo = step => {
     setStep(step);
@@ -66,8 +71,14 @@ export default function App() {
     houseNum: "",
     zipcode: ""
   };
-  const [formData, setFormData] = useLocalStorage("ipo2020-formData", initialValues);
+  const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
 
+  function ResetForm() {
+    window.localStorage.removeItem(CURRENT_STEP_KEY);
+    window.localStorage.removeItem(FORM_DATA_KEY);
+    setFormData(initialValues);
+    setStep(WELCOME);
+  }
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
   const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
 
@@ -80,15 +91,15 @@ export default function App() {
     },
     nameAvailable
   );
-  // const searchByName = useVoterData(
-  //   "SearchByName",
-  //   {
-  //     firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
-  //     lastName: formData.lastName,
-  //     birthYear: formData.birthYear
-  //   },
-  //   nameAvailable
-  // );
+  const searchByName = useVoterData(
+    "SearchByName",
+    {
+      firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
+      lastName: formData.lastName,
+      birthYear: formData.birthYear
+    },
+    nameAvailable
+  );
   const findByAddress = useVoterData(
     "FindByAddress",
     {
@@ -98,14 +109,14 @@ export default function App() {
     },
     addressAvailale
   );
-  // const searchByAddress = useVoterData(
-  //   "SearchByAddress",
-  //   {
-  //     houseNum: formData.houseNum,
-  //     zipcode: formData.zipcode
-  //   },
-  //   addressAvailale
-  // );
+  const searchByAddress = useVoterData(
+    "SearchByAddress",
+    {
+      houseNum: formData.houseNum,
+      zipcode: formData.zipcode
+    },
+    addressAvailale
+  );
 
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthYear);
 
@@ -143,8 +154,8 @@ export default function App() {
           next={GoToThankyou}
           prev={GoToEditAddress}
           restart={GoToEditEmail}
-          findByName={findByName}
-          findByAddress={findByAddress}
+          searchByName={searchByName}
+          searchByAddress={searchByAddress}
         />
       )}
       {step === THANKYOU && <Thankyou next={GoToSurvey} />}
@@ -154,8 +165,24 @@ export default function App() {
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}
-        | <a href="mailto:support@equal.vote">Email Support</a>
+        | <a href="mailto:support@equal.vote">Email Support</a>&nbsp;&nbsp;&nbsp;
+        <button type="button" onClick={() => setDebugMode(!debugMode)}>
+          {debugMode ? "Hide" : "Show"} Debug Info
+        </button>
+        &nbsp;&nbsp;&nbsp;
+        <button type="button" onClick={() => ResetForm()}>
+          Reset Form
+        </button>
       </p>
+      {debugMode && (
+        <>
+          <pre>{JSON.stringify(formData, null, 2)}</pre>
+          <FetchViewer name="FindByName" result={findByName} />
+          <FetchViewer name="FindByAddress" result={findByAddress} />
+          <FetchViewer name="SearchByName" result={searchByName} />
+          <FetchViewer name="SearchByAddress" result={searchByAddress} />
+        </>
+      )}
     </div>
   );
 }

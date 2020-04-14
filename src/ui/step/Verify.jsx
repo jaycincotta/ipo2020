@@ -1,28 +1,36 @@
-import React, { useState } from "react";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import FormField from "../FormField";
+import React from "react";
 
-export default function Verify({ next, prev, restart, findByName, findByAddress }) {
+export default function Verify({ next, prev, restart, searchByName, searchByAddress }) {
   const validated =
-    findByAddress.response &&
-    findByAddress.response.length === 1 &&
-    findByName.response &&
-    findByName.response.length === 1 &&
-    findByName.response[0].VoterId === findByAddress.response[0].VoterId;
-  const voterId = validated ? findByAddress.response[0].VoterId : "Not Found";
+    searchByAddress.response &&
+    searchByAddress.response.length === 1 &&
+    searchByName.response &&
+    searchByName.response.length === 1 &&
+    searchByName.response[0].VoterId === searchByAddress.response[0].VoterId;
+  const voterId = validated ? searchByAddress.response[0].VoterId : "Not Found";
+  const voterInfo = validated ? searchByAddress.response[0] : 0;
+  function BallotRequest(email, voterInfo) {
+    return {
+      Email: email,
+      ...voterInfo
+    };
+  }
   return (
     <div>
       <h2>Please Confirm Your Voter Information</h2>
       {validated && (
         <>
           <h3>
-            <b>VoterId: {voterId}</b>
+            {voterInfo.FirstName} {voterInfo.LastName}
+            <br />
+            {voterInfo.Address1}
+            <br />
+            {voterInfo.City} {voterInfo.ZipCode}
           </h3>
           <p>Please click CONFIRM to receive an email with your ballot</p>
         </>
       )}
-      {!validated && (
+      {!validated && !searchByName.isLoading && !searchByAddress.isLoading && (
         <>
           <h1 className={!validated ? "error" : ""}>
             <b>VoterId: {voterId}</b>
@@ -32,6 +40,7 @@ export default function Verify({ next, prev, restart, findByName, findByAddress 
           </p>
         </>
       )}
+      {(searchByName.isLoading || searchByAddress.isLoading) && <p>Loading...</p>}
       <button type="button" onClick={() => next()}>
         CONFIRM
       </button>
