@@ -41,7 +41,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
             firstName: values.firstName,
             lastName: values.lastName,
             birthDate: values.birthDate,
-            birthYear: new Date(values.birthDate).getFullYear()
+            birthYear: `${new Date(values.birthDate).getFullYear()}`
           });
         } catch (error) {
           console.log("Error", error);
