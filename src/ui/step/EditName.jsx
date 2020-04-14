@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../FormField";
 
-export default function EditName({ next, formData, setFormData, findByName }) {
+export default function EditName({ next, prev, formData, setFormData, findByName }) {
   console.log("EditName", formData);
   const [editing, setEditing] = useState(false);
 
@@ -106,6 +106,10 @@ export default function EditName({ next, formData, setFormData, findByName }) {
                   Yes, I'm sure
                 </button>
               )}
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" onClick={() => prev()}>
+                Go Back
+              </button>
             </Form>
           </div>
         );

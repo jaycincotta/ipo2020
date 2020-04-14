@@ -8,6 +8,7 @@ import RepeatVoter from "./ui/step/RepeatVoter";
 import EditEmail from "./ui/step/EditEmail";
 import EditName from "./ui/step/EditName";
 import EditAddress from "./ui/step/EditAddress";
+import Verify from "./ui/step/Verify";
 import MyVoteURL from "./MyVoteURL";
 
 // Wizard-Related stuff
@@ -16,6 +17,7 @@ const WELCOME = 0;
 const EDIT_EMAIL = 1;
 const EDIT_NAME = 2;
 const EDIT_ADDRESS = 3;
+const VERIFY = 4;
 const THANKYOU = 9;
 const REPEAT_VISITOR = -1;
 
@@ -40,6 +42,10 @@ export default function App() {
 
   const GoToEditAddress = () => {
     GoTo(EDIT_ADDRESS);
+  };
+
+  const GoToVerify = () => {
+    GoTo(VERIFY);
   };
 
   const GoToThankyou = () => {
@@ -114,13 +120,29 @@ export default function App() {
       {step === WELCOME && <Welcome next={GoToEditEmail} />}
       {step === EDIT_EMAIL && <EditEmail next={GoToEditName} formData={formData} setFormData={setFormData} />}
       {step === EDIT_NAME && (
-        <EditName next={GoToEditAddress} formData={formData} setFormData={setFormData} findByName={findByName} />
+        <EditName
+          next={GoToEditAddress}
+          prev={GoToEditEmail}
+          formData={formData}
+          setFormData={setFormData}
+          findByName={findByName}
+        />
       )}
       {step === EDIT_ADDRESS && (
         <EditAddress
-          next={GoToThankyou}
+          next={GoToVerify}
+          prev={GoToEditName}
           formData={formData}
           setFormData={setFormData}
+          findByName={findByName}
+          findByAddress={findByAddress}
+        />
+      )}
+      {step === VERIFY && (
+        <Verify
+          next={GoToThankyou}
+          prev={GoToEditAddress}
+          restart={GoToEditEmail}
           findByName={findByName}
           findByAddress={findByAddress}
         />

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import FetchViewer from "../FetchViewer";
 import FormField from "../FormField";
 
-export default function EditAddress({ next, formData, setFormData, findByName, findByAddress }) {
+export default function EditAddress({ next, prev, formData, setFormData, findByName, findByAddress }) {
   console.log("EditAddress", formData);
   const [editing, setEditing] = useState(false);
 
@@ -110,6 +110,10 @@ export default function EditAddress({ next, formData, setFormData, findByName, f
                   Yes, I'm sure
                 </button>
               )}
+              &nbsp;&nbsp;&nbsp;
+              <button type="button" onClick={() => prev()}>
+                Go Back
+              </button>
             </Form>
           </div>
         );
