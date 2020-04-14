@@ -9,12 +9,7 @@ export default function Verify({ next, prev, restart, formData, setFormData, sea
     searchByName.response[0].VoterId === searchByAddress.response[0].VoterId;
   const voterId = validated ? searchByAddress.response[0].VoterId : "Not Found";
   const voterInfo = validated ? searchByAddress.response[0] : 0;
-  function BallotRequest(email, voterInfo) {
-    return {
-      Email: email,
-      ...voterInfo
-    };
-  }
+
   function Confirm(next) {
     setFormData({
       ...formData,
