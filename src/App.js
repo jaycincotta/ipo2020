@@ -123,7 +123,7 @@ export default function App() {
     addressAvailale
   );
 
-  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthYear);
+  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   return (
     <div className="page">

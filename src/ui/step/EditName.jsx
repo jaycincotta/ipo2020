@@ -7,10 +7,16 @@ export default function EditName({ next, prev, formData, setFormData, findByName
   console.log("EditName", formData);
   const [editing, setEditing] = useState(false);
 
+  const dateRegExp = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
   const validations = {
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
-    birthYear: Yup.string().required("Birth year is required")
+    birthDate: Yup.string()
+      .required("Date of birth is required")
+      .matches(dateRegExp, "Please enter as mm/dd/yyyy")
+      .test("ValidDate", "Invalid date", value => !isNaN(Date.parse(value)))
+      .test("MinYear", "You must be at least 18 years old", value => Date.parse(value) < Date.parse("5/13/2002"))
+      .test("MaxYear", "You must still be alive", value => Date.parse(value) > Date.parse("1/1/1900"))
   };
   const inputSchema = Yup.object().shape(validations);
 
@@ -20,7 +26,11 @@ export default function EditName({ next, prev, formData, setFormData, findByName
         console.log("validate", values);
         setEditing(true);
       }}
-      initialValues={{ firstName: formData.firstName, lastName: formData.lastName, birthYear: formData.birthYear }}
+      initialValues={{
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        birthDate: formData.birthDate
+      }}
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
@@ -30,7 +40,8 @@ export default function EditName({ next, prev, formData, setFormData, findByName
             ...formData,
             firstName: values.firstName,
             lastName: values.lastName,
-            birthYear: values.birthYear
+            birthDate: values.birthDate,
+            birthYear: new Date(values.birthDate).getFullYear()
           });
         } catch (error) {
           console.log("Error", error);
@@ -57,7 +68,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           findByName.response.length === 1 &&
           formData.firstName.toUpperCase() === values.firstName.toUpperCase() &&
           formData.lastName.toUpperCase() === values.lastName.toUpperCase() &&
-          formData.birthYear === values.birthYear;
+          formData.birthYear === new Date(values.birthDate).getFullYear();
         const invalidated = !editing && findByName.response && findByName.response.length !== 1;
 
         return (
@@ -80,10 +91,10 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                 touched={touched}
               />
               <FormField
-                name="birthYear"
+                name="birthDate"
                 required
-                caption="Birth Year"
-                placeholder="Year you were born"
+                caption="Date of Birth"
+                placeholder="Your birthday"
                 errors={errors}
                 touched={touched}
               />
