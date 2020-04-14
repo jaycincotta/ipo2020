@@ -90,12 +90,9 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                 errors={errors}
                 touched={touched}
               />
-              {findByAddress.isLoading && (
-                <p>
-                  <i>Verifying...</i>
-                </p>
-              )}
-              {invalidated && <p class="error">Are you sure?</p>}
+              {validated && <p className="valid">Address validated.</p>}
+              {findByAddress.isLoading && <p className="validating">Validating...</p>}
+              {invalidated && <p className="invalid">Are you sure?</p>}
               {!validated && !invalidated && !isSubmitting && !findByAddress.isLoading && (
                 <button type="submit">Validate</button>
               )}
