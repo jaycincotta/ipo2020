@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import "./index.css";
 import "./App.css";
 import useVoterData from "./hooks/useVoterData";
+import useStarId from "./hooks/useStarId";
 import useLocalStorage from "./hooks/useLocalStorage";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
@@ -54,6 +56,7 @@ export default function App() {
   };
 
   const GoToThankyou = () => {
+    //setConfirmed(true);
     GoTo(THANKYOU);
   };
 
@@ -79,6 +82,9 @@ export default function App() {
   const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
 
   function ResetForm() {
+    setVoterId(null);
+    setStarId(null);
+    setConfirmed(false);
     window.localStorage.removeItem(CURRENT_STEP_KEY);
     window.localStorage.removeItem(FORM_DATA_KEY);
     setFormData(initialValues);
@@ -123,73 +129,102 @@ export default function App() {
     addressAvailale
   );
 
+  const [starId, setStarId] = useState(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const [voterId, setVoterId] = useState(null);
+
+  const getStarId = useStarId(voterId, confirmed);
+
+  if (!voterId && confirmed && findByName.response && !findByName.isLoading && findByName.response[0].VoterId) {
+    setVoterId(findByName.response[0].VoterId);
+  }
+  if (!starId && confirmed && getStarId.response && !getStarId.isLoading) {
+    setStarId(getStarId.response.starId);
+  }
+
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   return (
-    <div className="page">
-      <h1>
-        2020 IPO Presidential Preference Poll
-        <br />
-        and Statewide Primary Election
-      </h1>
-      {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
-      {step === WELCOME && <Welcome next={GoToEditEmail} />}
-      {step === EDIT_EMAIL && <EditEmail next={GoToEditName} formData={formData} setFormData={setFormData} />}
-      {step === EDIT_NAME && (
-        <EditName
-          next={GoToEditAddress}
-          prev={GoToEditEmail}
-          formData={formData}
-          setFormData={setFormData}
-          findByName={findByName}
-        />
-      )}
-      {step === EDIT_ADDRESS && (
-        <EditAddress
-          next={GoToVerify}
-          prev={GoToEditName}
-          formData={formData}
-          setFormData={setFormData}
-          findByName={findByName}
-          findByAddress={findByAddress}
-        />
-      )}
-      {step === VERIFY && (
-        <Verify
-          next={GoToThankyou}
-          prev={GoToEditAddress}
-          restart={GoToEditEmail}
-          formData={formData}
-          setFormData={setFormData}
-          searchByName={searchByName}
-          searchByAddress={searchByAddress}
-        />
-      )}
-      {step === THANKYOU && <Thankyou next={GoToSurvey} />}
-      <br />
-      <hr />
-      <p>
+    <div id="page">
+      <div id="pageHeader">
+        <img id="headerLogo" src="https://star.vote/web/images/starvote_logo.png" alt="Logo" />
+        <h1>
+          IPO Presidential Preference Poll
+          <br />
+          and Statewide Primary Election
+        </h1>
+      </div>
+      <div id="main">
+        <div className="bigContainer">
+          {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
+          {step === WELCOME && <Welcome next={GoToEditEmail} />}
+          {step === EDIT_EMAIL && <EditEmail next={GoToEditName} formData={formData} setFormData={setFormData} />}
+          {step === EDIT_NAME && (
+            <EditName
+              next={GoToEditAddress}
+              prev={GoToEditEmail}
+              formData={formData}
+              setFormData={setFormData}
+              findByName={findByName}
+            />
+          )}
+          {step === EDIT_ADDRESS && (
+            <EditAddress
+              next={GoToVerify}
+              prev={GoToEditName}
+              formData={formData}
+              setFormData={setFormData}
+              findByName={findByName}
+              findByAddress={findByAddress}
+            />
+          )}
+          {step === VERIFY && (
+            <Verify
+              next={GoToThankyou}
+              prev={GoToEditAddress}
+              restart={GoToEditEmail}
+              formData={formData}
+              setFormData={setFormData}
+              findByName={findByName}
+              findByAddress={findByAddress}
+            />
+          )}
+          {step === THANKYOU && <Thankyou next={GoToSurvey} />}
+        </div>
+        {debugMode && (
+          <div className="content">
+            <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
+            <FetchViewer name="GetStarId" result={getStarId} />
+            <FetchViewer name="FindByName" result={findByName} />
+            <FetchViewer name="FindByAddress" result={findByAddress} />
+            {/* <FetchViewer name="SearchByName" result={searchByName} />
+          <FetchViewer name="SearchByAddress" result={searchByAddress} /> */}
+          </div>
+        )}
+      </div>
+      <div id="footer" class="ui-footer ui-bar-inherit">
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}
-        | <a href="mailto:support@equal.vote">Email Support</a>&nbsp;&nbsp;&nbsp;
-        <button type="button" onClick={() => setDebugMode(!debugMode)}>
-          {debugMode ? "Hide" : "Show"} Debug Info
-        </button>
-        &nbsp;&nbsp;&nbsp;
-        <button type="button" onClick={() => ResetForm()}>
-          Reset Form
-        </button>
-      </p>
-      {debugMode && (
-        <>
-          <pre>{JSON.stringify(formData, null, 2)}</pre>
-          <FetchViewer name="FindByName" result={findByName} />
-          <FetchViewer name="FindByAddress" result={findByAddress} />
-          <FetchViewer name="SearchByName" result={searchByName} />
-          <FetchViewer name="SearchByAddress" result={searchByAddress} />
-        </>
-      )}
+        | <a href="mailto:support@equal.vote">Email Support</a> |{" "}
+        <a href="https://www.starvoting.us/" data-role="none">
+          Learn more about STAR Voting
+        </a>{" "}
+        |{" "}
+        <a
+          href=""
+          onClick={e => {
+            setDebugMode(!debugMode);
+            e.preventDefault();
+          }}
+        >
+          {debugMode ? "Hide" : "Show"} Debug
+        </a>{" "}
+        |{" "}
+        <a href="" onClick={() => ResetForm()}>
+          Reset
+        </a>
+      </div>
     </div>
   );
 }

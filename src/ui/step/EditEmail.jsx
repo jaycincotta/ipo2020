@@ -47,33 +47,38 @@ export default function EditEmail({ next, formData, setFormData }) {
         //handleReset,
       }) => {
         return (
-          <div>
-            <p>We require an email address to send you your ballot.</p>
-            <Form>
-              <FormField
-                name="email"
-                required
-                caption="Email Address"
-                placeholder="Email"
-                errors={errors}
-                touched={touched}
-                setFieldTouched={setFieldTouched}
-              />
-              <FormField
-                name="phone"
-                required
-                caption="Phone Number"
-                placeholder="Phone"
-                errors={errors}
-                touched={touched}
-                setFieldTouched={setFieldTouched}
-              />
-              <button type="submit" disabled={isSubmitting}>
-                Continue
-              </button>
-              <br />
-            </Form>
-          </div>
+          <>
+            <div className="bigContainerTitle">
+              <h2>Enter Contact Information</h2>
+            </div>
+            <div className="content">
+              <p>We require an email address to send you your ballot.</p>
+              <Form>
+                <FormField
+                  name="email"
+                  required
+                  caption="Email Address"
+                  placeholder="Email"
+                  errors={errors}
+                  touched={touched}
+                  setFieldTouched={setFieldTouched}
+                />
+                <FormField
+                  name="phone"
+                  required
+                  caption="Phone Number"
+                  placeholder="Phone"
+                  errors={errors}
+                  touched={touched}
+                  setFieldTouched={setFieldTouched}
+                />
+                <button type="submit" disabled={isSubmitting}>
+                  Continue
+                </button>
+                <br />
+              </Form>
+            </div>
+          </>
         );
       }}
     </Formik>

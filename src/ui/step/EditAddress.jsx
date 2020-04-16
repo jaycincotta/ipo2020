@@ -72,46 +72,51 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
         const invalidated = !editing && findByAddress.response && findByAddress.response.length !== 1;
 
         return (
-          <div>
-            <Form>
-              <FormField
-                name="houseNum"
-                required
-                caption="House Number"
-                placeholder="House Number"
-                errors={errors}
-                touched={touched}
-              />
-              <FormField
-                name="zipcode"
-                required
-                caption="Zipcode"
-                placeholder="Zipcode"
-                errors={errors}
-                touched={touched}
-              />
-              {validated && <p className="valid">Address validated.</p>}
-              {findByAddress.isLoading && <p className="validating">Validating...</p>}
-              {invalidated && <p className="invalid">Are you sure?</p>}
-              {!validated && !invalidated && !isSubmitting && !findByAddress.isLoading && (
-                <button type="submit">Validate</button>
-              )}
-              {validated && (
-                <button type="button" onClick={() => next()}>
-                  Continue
+          <>
+            <div className="bigContainerTitle">
+              <h2>Enter Address</h2>
+            </div>
+            <div className="content">
+              <Form>
+                <FormField
+                  name="houseNum"
+                  required
+                  caption="House Number"
+                  placeholder="House Number"
+                  errors={errors}
+                  touched={touched}
+                />
+                <FormField
+                  name="zipcode"
+                  required
+                  caption="Zipcode"
+                  placeholder="Zipcode"
+                  errors={errors}
+                  touched={touched}
+                />
+                {validated && <p className="valid">Address validated.</p>}
+                {findByAddress.isLoading && <p className="validating">Validating...</p>}
+                {invalidated && <p className="invalid">Are you sure?</p>}
+                {!validated && !invalidated && !isSubmitting && !findByAddress.isLoading && (
+                  <button type="submit">Validate</button>
+                )}
+                {validated && (
+                  <button type="button" onClick={() => next()}>
+                    Continue
+                  </button>
+                )}
+                {invalidated && (
+                  <button type="button" onClick={() => next()}>
+                    Yes, I'm sure
+                  </button>
+                )}
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" onClick={() => prev()}>
+                  Go Back
                 </button>
-              )}
-              {invalidated && (
-                <button type="button" onClick={() => next()}>
-                  Yes, I'm sure
-                </button>
-              )}
-              &nbsp;&nbsp;&nbsp;
-              <button type="button" onClick={() => prev()}>
-                Go Back
-              </button>
-            </Form>
-          </div>
+              </Form>
+            </div>
+          </>
         );
       }}
     </Formik>

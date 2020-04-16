@@ -68,58 +68,63 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           findByName.response.length === 1 &&
           formData.firstName.toUpperCase() === values.firstName.toUpperCase() &&
           formData.lastName.toUpperCase() === values.lastName.toUpperCase() &&
-          formData.birthYear === new Date(values.birthDate).getFullYear();
+          formData.birthYear === new Date(values.birthDate).getFullYear().toString();
         const invalidated = !editing && findByName.response && findByName.response.length !== 1;
 
         return (
-          <div>
-            <Form>
-              <FormField
-                name="firstName"
-                required
-                caption="First Name"
-                placeholder="First name"
-                errors={errors}
-                touched={touched}
-              />
-              <FormField
-                name="lastName"
-                required
-                caption="Last Name"
-                placeholder="Last name"
-                errors={errors}
-                touched={touched}
-              />
-              <FormField
-                name="birthDate"
-                required
-                caption="Date of Birth"
-                placeholder="Your birthday"
-                errors={errors}
-                touched={touched}
-              />
-              {validated && <p className="valid">Name and date of birth validated.</p>}
-              {findByName.isLoading && <p className="validating">Validating...</p>}
-              {invalidated && <p className="invalid">Are you sure?</p>}
-              {!validated && !invalidated && !isSubmitting && !findByName.isLoading && (
-                <button type="submit">Validate</button>
-              )}
-              {validated && (
-                <button type="button" onClick={() => next()}>
-                  Continue
+          <>
+            <div className="bigContainerTitle">
+              <h2>Enter Name and Birthdate</h2>
+            </div>
+            <div className="content">
+              <Form>
+                <FormField
+                  name="firstName"
+                  required
+                  caption="First Name"
+                  placeholder="First name"
+                  errors={errors}
+                  touched={touched}
+                />
+                <FormField
+                  name="lastName"
+                  required
+                  caption="Last Name"
+                  placeholder="Last name"
+                  errors={errors}
+                  touched={touched}
+                />
+                <FormField
+                  name="birthDate"
+                  required
+                  caption="Date of Birth (mm/dd/yyyy)"
+                  placeholder="Your birthday"
+                  errors={errors}
+                  touched={touched}
+                />
+                {validated && <p className="valid">Name and date of birth validated.</p>}
+                {findByName.isLoading && <p className="validating">Validating...</p>}
+                {invalidated && <p className="invalid">Are you sure?</p>}
+                {!validated && !invalidated && !isSubmitting && !findByName.isLoading && (
+                  <button type="submit">Validate</button>
+                )}
+                {validated && (
+                  <button type="button" onClick={() => next()}>
+                    Continue
+                  </button>
+                )}
+                {invalidated && (
+                  <button type="button" onClick={() => next()}>
+                    Yes, I'm sure
+                  </button>
+                )}
+                &nbsp;&nbsp;&nbsp;
+                <button type="button" onClick={() => prev()}>
+                  Go Back
                 </button>
-              )}
-              {invalidated && (
-                <button type="button" onClick={() => next()}>
-                  Yes, I'm sure
-                </button>
-              )}
-              &nbsp;&nbsp;&nbsp;
-              <button type="button" onClick={() => prev()}>
-                Go Back
-              </button>
-            </Form>
-          </div>
+              </Form>
+            </div>
+          </>
         );
       }}
     </Formik>
