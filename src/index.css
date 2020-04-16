@@ -115,7 +115,7 @@ caption {
 .content {
   padding: 12px;
 }
-button {
+button[type="button"] {
   padding: 8px;
   background-color: #ededed;
   border-color: #ddd;

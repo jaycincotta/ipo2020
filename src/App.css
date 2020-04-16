@@ -31,7 +31,7 @@ label {
   margin-top: 12px;
 }
 
-button {
+button[type="button"] {
   margin-top: 18px;
 }
 
@@ -41,4 +41,10 @@ button {
 
 .fetchViewer {
   margin-top: 12px;
+}
+
+.buttonLink {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
 }
