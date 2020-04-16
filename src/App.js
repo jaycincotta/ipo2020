@@ -102,15 +102,6 @@ export default function App() {
     },
     nameAvailable
   );
-  const searchByName = useVoterData(
-    "SearchByName",
-    {
-      firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
-      lastName: formData.lastName,
-      birthYear: formData.birthYear
-    },
-    nameAvailable
-  );
   const findByAddress = useVoterData(
     "FindByAddress",
     {
@@ -120,14 +111,23 @@ export default function App() {
     },
     addressAvailale
   );
-  const searchByAddress = useVoterData(
-    "SearchByAddress",
-    {
-      houseNum: formData.houseNum,
-      zipcode: formData.zipcode
-    },
-    addressAvailale
-  );
+  // const searchByName = useVoterData(
+  //   "SearchByName",
+  //   {
+  //     firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
+  //     lastName: formData.lastName,
+  //     birthYear: formData.birthYear
+  //   },
+  //   nameAvailable
+  // );
+  // const searchByAddress = useVoterData(
+  //   "SearchByAddress",
+  //   {
+  //     houseNum: formData.houseNum,
+  //     zipcode: formData.zipcode
+  //   },
+  //   addressAvailale
+  // );
 
   const [starId, setStarId] = useState(null);
   const [confirmed, setConfirmed] = useState(false);
