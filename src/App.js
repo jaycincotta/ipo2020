@@ -211,7 +211,7 @@ export default function App() {
           Learn more about STAR Voting
         </a>{" "}
         |{" "}
-        <button
+        {/* <button
           className="buttonLink"
           href=""
           onClick={e => {
@@ -224,7 +224,7 @@ export default function App() {
         |{" "}
         <button className="buttonLink" href="" onClick={() => ResetForm()}>
           Reset
-        </button>
+        </button> */}
       </div>
     </div>
   );
