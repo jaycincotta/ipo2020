@@ -8,8 +8,8 @@ export default function useStarId(voterId, enabled) {
     headers: {
       // Basic Auth header generated with:
       // https://www.blitter.se/utils/basic-authentication-header-generator/
-      Authorization: "Basic c3RhcjppcG8yMDIwIQ==",
-      "Content-Type": "text/plain"
+      // Authorization: "Basic c3RhcjppcG8yMDIwIQ==",
+      Accept: "application/json"
     }
   };
   return useFetch(url, options);

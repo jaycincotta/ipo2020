@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./index.css";
 import "./App.css";
 import useVoterData from "./hooks/useVoterData";
-import useStarId from "./hooks/useStarId";
 import useLocalStorage from "./hooks/useLocalStorage";
+import getStarId from "./hooks/getStarId";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
 import RepeatVoter from "./ui/step/RepeatVoter";
@@ -13,6 +13,7 @@ import EditAddress from "./ui/step/EditAddress";
 import Verify from "./ui/step/Verify";
 import MyVoteURL from "./MyVoteURL";
 import FetchViewer from "./ui/FetchViewer";
+import RequestBallot from "./RequestBallot";
 
 const CURRENT_STEP_KEY = "ipo2020-currentStep";
 const FORM_DATA_KEY = "ipo2020-formData";
@@ -28,8 +29,80 @@ const THANKYOU = 9;
 const REPEAT_VISITOR = -1;
 
 export default function App() {
+  // Voter Data
+  const initialValues = {
+    starId: "",
+    voterId: "",
+    email: "",
+    phone: "",
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    birthYear: "",
+    houseNum: "",
+    zipcode: "",
+    address: "",
+    city: ""
+  };
+
+  const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
+
   const [debugMode, setDebugMode] = useState(false);
   const [step, setStep] = useLocalStorage(CURRENT_STEP_KEY, WELCOME);
+  const [confirmed, setConfirmed] = useState(false);
+  const [loadingStarId, setLoadingStarId] = useState(false);
+  const [starId, setStarId] = useState(null);
+  const [voterId, setVoterId] = useState(null);
+
+  const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
+  const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
+
+  const findByName = useVoterData(
+    "FindByName",
+    {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      birthYear: formData.birthYear
+    },
+    nameAvailable
+  );
+  const findByAddress = useVoterData(
+    "FindByAddress",
+    {
+      houseNum: formData.houseNum,
+      zipcode: formData.zipcode,
+      birthYear: formData.birthYear
+    },
+    addressAvailale
+  );
+
+  //const getStarId = useStarId(voterId, confirmed);
+
+  if (!voterId && confirmed && findByName.response && !findByName.isLoading && findByName.response[0].VoterId) {
+    setVoterId(findByName.response[0].VoterId);
+  }
+
+  // if (confirmed && !loadingStarId && voterId && !starId && !formData.starId) {
+  //   console.log("Loading?", loadingStarId);
+  //   setLoadingStarId(true);
+  //   setTimeout(() => {
+  //     console.log("Still loading?", loadingStarId);
+  //     getStarId(voterId)
+  //       .then(starId => {
+  //         setStarId(starId);
+  //         console.log(`StarId is ${starId}`);
+  //         setFormData({
+  //           ...formData,
+  //           starId: starId
+  //         });
+  //         setTimeout(() => setLoadingStarId(false), 100);
+  //       })
+  //       .catch(err => {
+  //         console.log("FAIL", err);
+  //         setConfirmed(false);
+  //       });
+  //   }, 10);
+  // }
 
   const GoTo = step => {
     setStep(step);
@@ -56,7 +129,45 @@ export default function App() {
   };
 
   const GoToThankyou = () => {
-    //setConfirmed(true);
+    const validated =
+      findByAddress.response &&
+      findByAddress.response.length === 1 &&
+      findByName.response &&
+      findByName.response.length === 1 &&
+      findByName.response[0].VoterId === findByAddress.response[0].VoterId;
+    const voterId1 = validated ? findByAddress.response[0].VoterId : "Not Found";
+    console.log("Confirmed?", validated, voterId1, confirmed, loadingStarId, voterId, starId, formData.starId);
+
+    //if (!confirmed && !loadingStarId && voterId && !starId && !formData.starId) {
+    setConfirmed(true);
+    console.log("Loading?", loadingStarId);
+    setLoadingStarId(true);
+    setTimeout(() => {
+      console.log("Still loading?", loadingStarId);
+      getStarId(voterId1)
+        .then(starId => {
+          console.log("getStarId returned", starId);
+          setStarId(starId);
+          console.log(`StarId is ${starId}`);
+          setFormData(prevState => {
+            const updatedData = {
+              ...formData,
+              starId: starId
+            };
+            console.log("Requesting email", updatedData);
+            RequestBallot(updatedData)
+              .then(() => console.log("RequestBallot success!"))
+              .catch(err => console.log("RequestBallot FAILED: ", err));
+            return updatedData;
+          });
+          setTimeout(() => setLoadingStarId(false), 100);
+        })
+        .catch(err => {
+          console.log("FAIL", err);
+          setConfirmed(false);
+        });
+    }, 10);
+    //}
     GoTo(THANKYOU);
   };
 
@@ -64,22 +175,6 @@ export default function App() {
     setStep(REPEAT_VISITOR);
     window.location = "https://star.vote/startrek/";
   };
-
-  // Voter Data
-  const initialValues = {
-    voterId: "",
-    email: "",
-    phone: "",
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    birthYear: "",
-    houseNum: "",
-    zipcode: "",
-    address: "",
-    city: ""
-  };
-  const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
 
   function ResetForm() {
     setVoterId(null);
@@ -90,27 +185,7 @@ export default function App() {
     setFormData(initialValues);
     setStep(WELCOME);
   }
-  const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
-  const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
 
-  const findByName = useVoterData(
-    "FindByName",
-    {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      birthYear: formData.birthYear
-    },
-    nameAvailable
-  );
-  const findByAddress = useVoterData(
-    "FindByAddress",
-    {
-      houseNum: formData.houseNum,
-      zipcode: formData.zipcode,
-      birthYear: formData.birthYear
-    },
-    addressAvailale
-  );
   // const searchByName = useVoterData(
   //   "SearchByName",
   //   {
@@ -129,18 +204,9 @@ export default function App() {
   //   addressAvailale
   // );
 
-  const [starId, setStarId] = useState(null);
-  const [confirmed, setConfirmed] = useState(false);
-  const [voterId, setVoterId] = useState(null);
-
-  const getStarId = useStarId(voterId, confirmed);
-
-  if (!voterId && confirmed && findByName.response && !findByName.isLoading && findByName.response[0].VoterId) {
-    setVoterId(findByName.response[0].VoterId);
-  }
-  if (!starId && confirmed && getStarId.response && !getStarId.isLoading) {
-    setStarId(getStarId.response.starId);
-  }
+  // if (!starId && confirmed && getStarId.response && !getStarId.isLoading) {
+  //   setStarId(getStarId.response.starId);
+  // }
 
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
@@ -194,7 +260,7 @@ export default function App() {
         {debugMode && (
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
-            <FetchViewer name="GetStarId" result={getStarId} />
+            {/* <FetchViewer name="GetStarId" result={getStarId} /> */}
             <FetchViewer name="FindByName" result={findByName} />
             <FetchViewer name="FindByAddress" result={findByAddress} />
             {/* <FetchViewer name="SearchByName" result={searchByName} />
@@ -202,7 +268,7 @@ export default function App() {
           </div>
         )}
       </div>
-      <div id="footer" class="ui-footer ui-bar-inherit">
+      <div id="footer" className="ui-footer ui-bar-inherit">
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}

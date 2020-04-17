@@ -11,12 +11,12 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
   const voterInfo = validated ? findByAddress.response[0] : 0;
 
   function Confirm(next) {
-    setFormData({
-      ...formData,
-      voterId: voterInfo.VoterId,
-      address: voterInfo.Address1,
-      city: voterInfo.City
-    });
+    // setFormData({
+    //   ...formData,
+    //   voterId: voterInfo.VoterId,
+    //   address: voterInfo.Address1,
+    //   city: voterInfo.City
+    // });
     next();
   }
   return (
@@ -48,7 +48,14 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
           </>
         )}
         {(findByName.isLoading || findByAddress.isLoading) && <p>Loading...</p>}
-        <button type="button" onClick={() => Confirm(next)}>
+        <button
+          type="button"
+          onClick={e => {
+            e.preventDefault();
+            console.log("CLICK!");
+            Confirm(next);
+          }}
+        >
           CONFIRM
         </button>
 
