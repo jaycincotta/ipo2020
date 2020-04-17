@@ -20,6 +20,9 @@ export default function Welcome({ next }) {
           Continue
         </button>
       </div>
+      <p>
+        <i>Version 0.1 alpha</i>
+      </p>
     </>
   );
 }
