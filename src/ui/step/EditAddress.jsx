@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../FormField";
+import MyVoteURL from "../../MyVoteURL";
 
 export default function EditAddress({ next, prev, formData, setFormData, findByName, findByAddress }) {
   console.log("EditAddress", formData);
   const [editing, setEditing] = useState(false);
+  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   const validations = {
     houseNum: Yup.number()
@@ -94,6 +96,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                   errors={errors}
                   touched={touched}
                 />
+                <div className="formSpacer" />
                 {validated && <p className="valid">Address validated.</p>}
                 {findByAddress.isLoading && <p className="validating">Validating...</p>}
                 {invalidated && <p className="invalid">Are you sure?</p>}
@@ -106,11 +109,15 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                   </button>
                 )}
                 {invalidated && (
-                  <button type="button" onClick={() => next()}>
-                    Yes, I'm sure
-                  </button>
+                  <>
+                    <button type="button" onClick={() => window.open(myVoteURL, "MyVote")}>
+                      Verify Voter Record
+                    </button>
+                    <button type="button" onClick={() => next()}>
+                      Yes, I'm sure
+                    </button>
+                  </>
                 )}
-                &nbsp;&nbsp;&nbsp;
                 <button type="button" onClick={() => prev()}>
                   Go Back
                 </button>

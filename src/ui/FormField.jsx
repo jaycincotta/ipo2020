@@ -3,6 +3,7 @@ import { Field, ErrorMessage } from "formik";
 
 export default function FormField({
   name,
+  autocomplete,
   required,
   caption,
   type,
@@ -26,6 +27,7 @@ export default function FormField({
         placeholder={placeholder}
         className={errors[name] && touched[name] ? "text-input error" : "text-input"}
         tabIndex={tabIndex}
+        autocomplete={autocomplete}
       />
       <br />
     </>

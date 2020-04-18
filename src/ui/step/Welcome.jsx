@@ -7,7 +7,7 @@ export default function Welcome({ next }) {
         <h2>Welcome</h2>
       </div>
       <div className="content">
-        <p>If you a registered voter in Oregon and either:</p>
+        <p>If you are a registered voter in Oregon and either:</p>
         <ul className="bulletList">
           <li>a member of the Independent Party of Oregon</li>
           <li>a non-affiliated voter</li>

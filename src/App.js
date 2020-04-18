@@ -14,6 +14,7 @@ import Verify from "./ui/step/Verify";
 import MyVoteURL from "./MyVoteURL";
 import FetchViewer from "./ui/FetchViewer";
 import RequestBallot from "./RequestBallot";
+import AppSettings from "./AppSettings";
 
 const CURRENT_STEP_KEY = "ipo2020-currentStep";
 const FORM_DATA_KEY = "ipo2020-formData";
@@ -258,7 +259,7 @@ export default function App() {
           {step === THANKYOU && <Thankyou next={GoToSurvey} />}
         </div>
         <p className="version">
-          <i>Version 0.2 alpha</i>
+          <i>{AppSettings.Version}</i>
         </p>
         {debugMode && (
           <div className="content">
@@ -271,7 +272,7 @@ export default function App() {
           </div>
         )}
       </div>
-      <div id="footer" className="ui-footer ui-bar-inherit">
+      <div id="footer2" className="ui-footer ui-bar-inherit">
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}

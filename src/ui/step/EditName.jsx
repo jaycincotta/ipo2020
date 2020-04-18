@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../FormField";
+import MyVoteURL from "../../MyVoteURL";
 
 export default function EditName({ next, prev, formData, setFormData, findByName }) {
   console.log("EditName", formData);
   const [editing, setEditing] = useState(false);
+  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   const dateRegExp = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
   const validations = {
@@ -80,6 +82,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
               <Form>
                 <FormField
                   name="firstName"
+                  autocomplete="off"
                   required
                   caption="First Name"
                   placeholder="First name"
@@ -88,6 +91,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                 />
                 <FormField
                   name="lastName"
+                  autocomplete="off"
                   required
                   caption="Last Name"
                   placeholder="Last name"
@@ -102,6 +106,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                   errors={errors}
                   touched={touched}
                 />
+                <div className="formSpacer" />
                 {validated && <p className="valid">Name and date of birth validated.</p>}
                 {findByName.isLoading && <p className="validating">Validating...</p>}
                 {invalidated && <p className="invalid">Are you sure?</p>}
@@ -114,11 +119,16 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                   </button>
                 )}
                 {invalidated && (
-                  <button type="button" onClick={() => next()}>
-                    Yes, I'm sure
-                  </button>
+                  <>
+                    <button type="button" onClick={() => window.open(myVoteURL, "MyVote")}>
+                      Verify Voter Record
+                    </button>
+
+                    <button type="button" onClick={() => next()}>
+                      Yes, I'm sure
+                    </button>
+                  </>
                 )}
-                &nbsp;&nbsp;&nbsp;
                 <button type="button" onClick={() => prev()}>
                   Go Back
                 </button>
