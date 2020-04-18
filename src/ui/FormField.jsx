@@ -27,7 +27,7 @@ export default function FormField({
         placeholder={placeholder}
         className={errors[name] && touched[name] ? "text-input error" : "text-input"}
         tabIndex={tabIndex}
-        autocomplete={autocomplete}
+        autoComplete={autocomplete}
       />
       <br />
     </>

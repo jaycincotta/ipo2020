@@ -67,11 +67,11 @@ export default function EditName({ next, prev, formData, setFormData, findByName
       }) => {
         const validated =
           findByName.response &&
-          findByName.response.length === 1 &&
+          findByName.response.length >= 1 &&
           formData.firstName.toUpperCase() === values.firstName.toUpperCase() &&
           formData.lastName.toUpperCase() === values.lastName.toUpperCase() &&
           formData.birthYear === new Date(values.birthDate).getFullYear().toString();
-        const invalidated = !editing && findByName.response && findByName.response.length !== 1;
+        const invalidated = !editing && findByName.response && findByName.response.length < 1;
 
         return (
           <>

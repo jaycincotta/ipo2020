@@ -132,11 +132,15 @@ export default function App() {
   const GoToThankyou = () => {
     const validated =
       findByAddress.response &&
-      findByAddress.response.length === 1 &&
+      findByAddress.response.length >= 1 &&
       findByName.response &&
-      findByName.response.length === 1 &&
-      findByName.response[0].VoterId === findByAddress.response[0].VoterId;
-    const voterId1 = validated ? findByAddress.response[0].VoterId : "Not Found";
+      findByName.response.length >= 1 &&
+      findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId));
+    const matches = validated
+      ? findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId))
+      : null;
+    const voterInfo = matches && matches.length === 1 ? matches[0] : null;
+    const voterId1 = voterInfo ? voterInfo.VoterId : "Not Found";
     console.log("Confirmed?", validated, voterId1, confirmed, loadingStarId, voterId, starId, formData.starId);
 
     //if (!confirmed && !loadingStarId && voterId && !starId && !formData.starId) {

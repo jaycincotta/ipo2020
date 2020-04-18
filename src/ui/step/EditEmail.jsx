@@ -52,7 +52,10 @@ export default function EditEmail({ next, formData, setFormData }) {
               <h2>Enter Contact Information</h2>
             </div>
             <div className="content">
-              <p>We require an email address to send you your ballot.</p>
+              <p>
+                Your ballot will be emailed to you. Your phone number may be used to contact you if needed for
+                credentialing purposes.
+              </p>
               <Form>
                 <FormField
                   name="email"
@@ -72,6 +75,12 @@ export default function EditEmail({ next, formData, setFormData }) {
                   touched={touched}
                   setFieldTouched={setFieldTouched}
                 />
+                <p className="todo">TODO: opt-in checkboxes</p>
+                <p className="annotation">
+                  <b>NOTE</b>: The security of your data is our top priority. We will never sell your data, spam you, or
+                  use your data in any manner beyond the officiation of this election. All voter data and documents will
+                  be deleted as soon as your vote has been verified and the election is concluded.
+                </p>
                 <button type="submit" disabled={isSubmitting}>
                   Continue
                 </button>

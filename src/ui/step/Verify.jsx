@@ -3,20 +3,24 @@ import React from "react";
 export default function Verify({ next, prev, restart, formData, setFormData, findByName, findByAddress }) {
   const validated =
     findByAddress.response &&
-    findByAddress.response.length === 1 &&
+    findByAddress.response.length >= 1 &&
     findByName.response &&
-    findByName.response.length === 1 &&
-    findByName.response[0].VoterId === findByAddress.response[0].VoterId;
-  const voterId = validated ? findByAddress.response[0].VoterId : "Not Found";
-  const voterInfo = validated ? findByAddress.response[0] : 0;
+    findByName.response.length >= 1 &&
+    findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId));
+  const matches = validated
+    ? findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId))
+    : null;
+  const voterInfo = matches && matches.length === 1 ? matches[0] : null;
+  const voterId = voterInfo ? voterInfo.VoterId : "Not Found";
 
+  console.log("VoterId:", voterId);
   function Confirm(next) {
-    // setFormData({
-    //   ...formData,
-    //   voterId: voterInfo.VoterId,
-    //   address: voterInfo.Address1,
-    //   city: voterInfo.City
-    // });
+    setFormData({
+      ...formData,
+      voterId: voterInfo.VoterId,
+      address: voterInfo.Address1,
+      city: voterInfo.City
+    });
     next();
   }
   return (
@@ -34,6 +38,7 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
               <br />
               {voterInfo.City} {voterInfo.ZipCode}
             </h3>
+            <div className="formSpacer" />
             <p>Please click CONFIRM to receive an email with your ballot</p>
           </>
         )}
@@ -42,23 +47,23 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
             <h1 className={!validated ? "error" : ""}>
               <b>VoterId: {voterId}</b>
             </h1>
-            <p>
-              Please click <b>CONFIRM</b> to receive an email with your provisional ballot
-            </p>
+            <div className="formSpacer" />
+            <p>TODO: Add support for provisional ballots</p>
           </>
         )}
         {(findByName.isLoading || findByAddress.isLoading) && <p>Loading...</p>}
-        <button
-          type="button"
-          onClick={e => {
-            e.preventDefault();
-            console.log("CLICK!");
-            Confirm(next);
-          }}
-        >
-          CONFIRM
-        </button>
-
+        {validated && (
+          <button
+            type="button"
+            onClick={e => {
+              e.preventDefault();
+              console.log("CLICK!");
+              Confirm(next);
+            }}
+          >
+            CONFIRM
+          </button>
+        )}
         <button type="button" onClick={() => prev()}>
           Go Back
         </button>

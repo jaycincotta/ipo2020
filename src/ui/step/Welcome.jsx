@@ -7,14 +7,14 @@ export default function Welcome({ next }) {
         <h2>Welcome</h2>
       </div>
       <div className="content">
-        <p>If you are a registered voter in Oregon and either:</p>
-        <ul className="bulletList">
-          <li>a member of the Independent Party of Oregon</li>
-          <li>a non-affiliated voter</li>
-        </ul>
-        <p>Please complete this short process to receive an electronic ballot for our primary!</p>
         <p>
-          <b>You may cast your ballot anytime between APRIL 28 - MAY 11</b>
+          If you are a registered voter in Oregon and as of March 1st were either a member of the Independent Party of
+          Oregon or a non-affiliated voter, you are eligible to vote in the Independent Party of Oregon's May 2020
+          primary.
+        </p>
+        <p>Please complete the following registration process in order to receive an electronic ballot.</p>
+        <p>
+          <b>You may cast your ballot anytime between 8 AM April 28th and 8 PM May 12th</b>
         </p>
         <button type="button" onClick={() => next()}>
           Continue
