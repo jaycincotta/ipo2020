@@ -1,4 +1,4 @@
-const isProd = false;
+const isProd = true;
 const version = "Version 0.3 alpha";
 const Localhost = "http://localhost:7071";
 const Prodhost = "https://ipo2020-dev-appservice.azurewebsites.net";
