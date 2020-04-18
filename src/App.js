@@ -265,6 +265,9 @@ export default function App() {
             <FetchViewer name="FindByAddress" result={findByAddress} />
             {/* <FetchViewer name="SearchByName" result={searchByName} />
           <FetchViewer name="SearchByAddress" result={searchByAddress} /> */}
+            <p>
+              <i>Version 0.1 alpha</i>
+            </p>
           </div>
         )}
       </div>
