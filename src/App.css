@@ -48,3 +48,9 @@ button {
   cursor: pointer;
   text-decoration: underline;
 }
+.version {
+  font-size: 12px;
+  font-style: italic;
+  margin-top: 8px;
+  margin-left: 8px;
+}

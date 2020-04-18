@@ -257,6 +257,9 @@ export default function App() {
           )}
           {step === THANKYOU && <Thankyou next={GoToSurvey} />}
         </div>
+        <p className="version">
+          <i>Version 0.1 alpha</i>
+        </p>
         {debugMode && (
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
@@ -265,9 +268,6 @@ export default function App() {
             <FetchViewer name="FindByAddress" result={findByAddress} />
             {/* <FetchViewer name="SearchByName" result={searchByName} />
           <FetchViewer name="SearchByAddress" result={searchByAddress} /> */}
-            <p>
-              <i>Version 0.1 alpha</i>
-            </p>
           </div>
         )}
       </div>
