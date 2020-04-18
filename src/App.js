@@ -156,7 +156,7 @@ export default function App() {
             };
             console.log("Requesting email", updatedData);
             RequestBallot(updatedData)
-              .then(() => console.log("RequestBallot success!"))
+              .then(() => console.log("RequestBallot return!"))
               .catch(err => console.log("RequestBallot FAILED: ", err));
             return updatedData;
           });
@@ -258,7 +258,7 @@ export default function App() {
           {step === THANKYOU && <Thankyou next={GoToSurvey} />}
         </div>
         <p className="version">
-          <i>Version 0.1 alpha</i>
+          <i>Version 0.2 alpha</i>
         </p>
         {debugMode && (
           <div className="content">

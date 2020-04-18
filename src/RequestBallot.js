@@ -16,7 +16,7 @@ export default async function RequestBallot(voterInfo) {
       if (!response.ok) {
         throw response;
       }
-      return response.json();
+      return response.text();
     })
     .catch(err => {
       console.log("FAIL RequestBallot", err);
