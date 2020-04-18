@@ -69,7 +69,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
           formData.zipcode === values.zipcode &&
           findByName.response &&
           findByName.response.length >= 1 &&
-          findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId));
+          findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
 
         const invalidated = !editing && findByAddress.response && findByAddress.response.length < 1;
 

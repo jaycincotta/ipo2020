@@ -6,11 +6,12 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
     findByAddress.response.length >= 1 &&
     findByName.response &&
     findByName.response.length >= 1 &&
-    findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId));
+    findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
   const matches = validated
     ? findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId))
     : null;
-  const voterInfo = matches && matches.length === 1 ? matches[0] : null;
+  //TODO: If we had an multiple matches on name/address/dob, this assumes first one
+  const voterInfo = matches && matches.length >= 1 ? matches[0] : null;
   const voterId = voterInfo ? voterInfo.VoterId : "Not Found";
 
   console.log("VoterId:", voterId);

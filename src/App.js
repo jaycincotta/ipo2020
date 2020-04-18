@@ -135,7 +135,7 @@ export default function App() {
       findByAddress.response.length >= 1 &&
       findByName.response &&
       findByName.response.length >= 1 &&
-      findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId));
+      findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
     const matches = validated
       ? findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId))
       : null;
