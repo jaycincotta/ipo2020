@@ -67,15 +67,17 @@ export default function App() {
     },
     nameAvailable
   );
-  const findByName = useVoterData(
-    "FindByName",
-    {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      birthYear: formData.birthYear
-    },
-    nameAvailable
-  );
+  const findByName = findVoter;
+  //const findByAddress = findVoter;
+  // const findByName = useVoterData(
+  //   "FindByName",
+  //   {
+  //     firstName: formData.firstName,
+  //     lastName: formData.lastName,
+  //     birthYear: formData.birthYear
+  //   },
+  //   nameAvailable
+  // );
   const findByAddress = useVoterData(
     "FindByAddress",
     {
