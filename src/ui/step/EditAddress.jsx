@@ -113,8 +113,8 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                     <button type="button" onClick={() => window.open(myVoteURL, "MyVote")}>
                       Verify Voter Record
                     </button>
-                    <button type="button" onClick={() => next()}>
-                      Yes, I'm sure
+                    <button type="button" onClick={() => window.open("http://support.ipo.vote")}>
+                      Contact Voter Support
                     </button>
                   </>
                 )}

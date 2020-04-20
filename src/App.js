@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.css";
 import "./App.css";
 import useVoterData from "./hooks/useVoterData";
+import useFindVoter from "./hooks/useFindVoter";
 import useLocalStorage from "./hooks/useLocalStorage";
 import getStarId from "./hooks/getStarId";
 import Welcome from "./ui/step/Welcome";
@@ -58,6 +59,14 @@ export default function App() {
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
   const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
 
+  const findVoter = useFindVoter(
+    {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      birthYear: formData.birthYear
+    },
+    nameAvailable
+  );
   const findByName = useVoterData(
     "FindByName",
     {
@@ -149,7 +158,7 @@ export default function App() {
     setLoadingStarId(true);
     setTimeout(() => {
       console.log("Still loading?", loadingStarId);
-      getStarId(voterId1)
+      getStarId(voterId1, formData.email)
         .then(starId => {
           console.log("getStarId returned", starId);
           setStarId(starId);
@@ -269,6 +278,7 @@ export default function App() {
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
             {/* <FetchViewer name="GetStarId" result={getStarId} /> */}
+            <FetchViewer name="FindVoter" result={findVoter} />
             <FetchViewer name="FindByName" result={findByName} />
             <FetchViewer name="FindByAddress" result={findByAddress} />
             {/* <FetchViewer name="SearchByName" result={searchByName} />
@@ -280,11 +290,7 @@ export default function App() {
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}
-        | <a href="mailto:support@equal.vote">Email Support</a> |{" "}
-        <a href="https://www.starvoting.us/" data-role="none">
-          Learn more about STAR Voting
-        </a>{" "}
-        |{" "}
+        | <a href="http://support.ipo.vote">Contact Voter Support</a>|{" "}
         <span
           className="buttonLink"
           href=""
