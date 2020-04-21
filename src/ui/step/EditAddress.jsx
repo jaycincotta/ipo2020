@@ -73,6 +73,8 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
 
         const invalidated = !editing && findByAddress.response && findByAddress.response.length < 1;
 
+        if (validated) next();
+
         return (
           <>
             <div className="bigContainerTitle">

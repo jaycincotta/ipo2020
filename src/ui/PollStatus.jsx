@@ -22,8 +22,14 @@ function ArePollsClosed() {
   return PollStatus() === CLOSED;
 }
 
-function PollTestingWarning() {
-  return PollStatus() === TESTING ? <div id="headerWarning">FOR TESTING ONLY!</div> : "";
+function PollTestingWarning({ onClick }) {
+  return PollStatus() === TESTING ? (
+    <div id="headerWarning" onClick={onClick}>
+      FOR TESTING ONLY!
+    </div>
+  ) : (
+    ""
+  );
 }
 
 export { PollTestingWarning, PollStatus, ArePollsOpen, ArePollsClosed };

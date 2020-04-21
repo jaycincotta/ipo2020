@@ -239,12 +239,14 @@ export default function App() {
   }
   return (
     <div id="page">
-      <Header />
+      <Header reset={() => ResetForm()} debug={() => setDebugMode(!debugMode)} />
       <div id="main">
         <div className="bigContainer">
           {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
           {step === WELCOME && <Welcome next={GoToEditEmail} />}
-          {step === EDIT_EMAIL && <EditEmail next={GoToEditName} formData={formData} setFormData={setFormData} />}
+          {step === EDIT_EMAIL && (
+            <EditEmail next={GoToEditName} prev={GoToWelcome} formData={formData} setFormData={setFormData} />
+          )}
           {step === EDIT_NAME && (
             <EditName
               next={GoToEditAddress}
@@ -292,7 +294,7 @@ export default function App() {
           </div>
         )}
       </div>
-      <div id="footer2" className="ui-footer ui-bar-inherit">
+      {/* <div id="footer2" className="ui-footer ui-bar-inherit">
         <a href={myVoteURL} target="MyVote">
           Verify My Voter Record
         </a>{" "}
@@ -311,7 +313,7 @@ export default function App() {
         <span className="buttonLink" href="" onClick={() => ResetForm()}>
           Reset
         </span>
-      </div>
+      </div> */}
     </div>
   );
 }

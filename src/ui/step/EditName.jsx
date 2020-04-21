@@ -73,6 +73,8 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           formData.birthYear === new Date(values.birthDate).getFullYear().toString();
         const invalidated = !editing && findByName.response && findByName.response.length < 1;
 
+        if (validated) next();
+
         return (
           <>
             <div className="bigContainerTitle">

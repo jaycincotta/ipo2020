@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../FormField";
 
-export default function EditEmail({ next, formData, setFormData }) {
+export default function EditEmail({ next, prev, formData, setFormData }) {
   console.log("EditEmail", formData);
   const phoneRegExp = /^(\+?(011[. -]?)?\+?52[. -]?([0-9]{3}[. -]?[0-9]{3}[. -]?[0-9]{4}|[0-9]{2}[. -]?[0-9]{4}[. -]?[0-9]{4})|(\+?(1[. -]?)?(\(?[0-9]{3}\)?[. -]?[0-9]{3}[. -]?[0-9]{4})))(\s?(x|ext|ext.)\s?[0-9]{1,5})?$/;
 
@@ -83,6 +83,9 @@ export default function EditEmail({ next, formData, setFormData }) {
                 </p>
                 <button type="submit" disabled={isSubmitting}>
                   Continue
+                </button>
+                <button type="button" onClick={() => prev()}>
+                  Go Back
                 </button>
                 <br />
               </Form>
