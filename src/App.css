@@ -57,3 +57,13 @@ button {
 .formSpacer {
   margin-top: 12px;
 }
+#headerWarning {
+  float: right;
+  margin-top: 10px;
+  margin-right: 12px;
+  padding: 4px 8px;
+  color: red;
+  background-color: white;
+  font-size: 16px;
+  font-weight: bold;
+}

@@ -16,6 +16,9 @@ import MyVoteURL from "./MyVoteURL";
 import FetchViewer from "./ui/FetchViewer";
 import RequestBallot from "./RequestBallot";
 import AppSettings from "./AppSettings";
+import PollsClosed from "./ui/step/PollsClosed";
+import { ArePollsClosed } from "./ui/PollStatus";
+import Header from "./ui/Header";
 
 const CURRENT_STEP_KEY = "ipo2020-currentStep";
 const FORM_DATA_KEY = "ipo2020-formData";
@@ -226,16 +229,17 @@ export default function App() {
 
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
+  if (ArePollsClosed()) {
+    return (
+      <>
+        <Header />
+        <PollsClosed />
+      </>
+    );
+  }
   return (
     <div id="page">
-      <div id="pageHeader">
-        <img id="headerLogo" src="https://star.vote/web/images/starvote_logo.png" alt="Logo" />
-        <h1>
-          IPO Presidential Preference Poll
-          <br />
-          and Statewide Primary Election
-        </h1>
-      </div>
+      <Header />
       <div id="main">
         <div className="bigContainer">
           {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
