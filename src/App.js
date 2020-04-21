@@ -12,7 +12,7 @@ import EditEmail from "./ui/step/EditEmail";
 import EditName from "./ui/step/EditName";
 import EditAddress from "./ui/step/EditAddress";
 import Verify from "./ui/step/Verify";
-import MyVoteURL from "./MyVoteURL";
+//import MyVoteURL from "./MyVoteURL";
 import FetchViewer from "./ui/FetchViewer";
 import RequestBallot from "./RequestBallot";
 import AppSettings from "./AppSettings";
@@ -229,7 +229,7 @@ export default function App() {
   //   setStarId(getStarId.response.starId);
   // }
 
-  const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
+  //const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   if (ArePollsClosed()) {
     return (
