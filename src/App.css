@@ -68,3 +68,9 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
+.checkbox {
+  font-size: 13px;
+  font-style: italic;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}

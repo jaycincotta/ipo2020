@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormField from "../FormField";
+import FormCheckbox from "../FormCheckbox";
 
 export default function EditEmail({ next, prev, formData, setFormData }) {
   console.log("EditEmail", formData);
@@ -15,15 +16,24 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
 
   const form = (
     <Formik
-      initialValues={{ email: formData.email, phone: formData.phone }}
+      initialValues={{
+        email: formData.email,
+        phone: formData.phone,
+        optinIpo: formData.optinIpo,
+        optinStar: formData.optinStar
+      }}
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
         try {
           console.log("Submit");
-          setFormData({
-            ...formData,
-            email: values.email,
-            phone: values.phone
+          setFormData(prevState => {
+            return {
+              ...prevState,
+              email: values.email,
+              phone: values.phone,
+              optinIpo: values.optinIpo,
+              optinStar: values.optinStar
+            };
           });
           setTimeout(() => next(), 0);
         } catch (error) {
@@ -75,12 +85,24 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
                   touched={touched}
                   setFieldTouched={setFieldTouched}
                 />
-                <p className="todo">TODO: opt-in checkboxes</p>
-                <p className="annotation">
+                <div className="formSpacer" />
+                <FormCheckbox
+                  name="optinIpo"
+                  caption="Send me occassional updates from the Independent Party of Oregon"
+                  errors={errors}
+                  touched={touched}
+                />
+                <FormCheckbox
+                  name="optinStar"
+                  caption="Send me occassional updates from STAR Voting"
+                  errors={errors}
+                  touched={touched}
+                />
+                {/* <p className="annotation">
                   <b>NOTE</b>: The security of your data is our top priority. We will never sell your data, spam you, or
                   use your data in any manner beyond the officiation of this election. All voter data and documents will
                   be deleted as soon as your vote has been verified and the election is concluded.
-                </p>
+                </p> */}
                 <button type="submit" disabled={isSubmitting}>
                   Continue
                 </button>

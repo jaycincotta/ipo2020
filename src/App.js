@@ -47,7 +47,9 @@ export default function App() {
     houseNum: "",
     zipcode: "",
     address: "",
-    city: ""
+    city: "",
+    optinIpo: false,
+    optinStar: false
   };
 
   const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
@@ -170,7 +172,7 @@ export default function App() {
           console.log(`StarId is ${starId}`);
           setFormData(prevState => {
             const updatedData = {
-              ...formData,
+              ...prevState,
               starId: starId
             };
             console.log("Requesting email", updatedData);

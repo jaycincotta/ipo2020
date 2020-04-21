@@ -16,11 +16,13 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
 
   console.log("VoterId:", voterId);
   function Confirm(next) {
-    setFormData({
-      ...formData,
-      voterId: voterInfo.VoterId,
-      address: voterInfo.Address1,
-      city: voterInfo.City
+    setFormData(prevState => {
+      return {
+        ...prevState,
+        voterId: voterInfo.VoterId,
+        address: voterInfo.Address1,
+        city: voterInfo.City
+      };
     });
     next();
   }

@@ -38,12 +38,14 @@ export default function EditName({ next, prev, formData, setFormData, findByName
         try {
           console.log("Submit", formData, values);
           setEditing(false);
-          setFormData({
-            ...formData,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            birthDate: values.birthDate,
-            birthYear: `${new Date(values.birthDate).getFullYear()}`
+          setFormData(prevState => {
+            return {
+              ...prevState,
+              firstName: values.firstName,
+              lastName: values.lastName,
+              birthDate: values.birthDate,
+              birthYear: `${new Date(values.birthDate).getFullYear()}`
+            };
           });
         } catch (error) {
           console.log("Error", error);
