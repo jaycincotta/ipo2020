@@ -4,11 +4,11 @@ export default function Thankyou({ next, formData }) {
   return (
     <>
       <div className="bigContainerTitle">
-        <h2>Thank You!</h2>
+        <h2>Thank You, {formData.firstName}!</h2>
       </div>
       <div className="content">
         <p>
-          Thanks, {formData.firstName}! We have sent your ballot to <b>{formData.email}</b>.
+          We have sent your ballot to <b>{formData.email}</b>
         </p>
         <p>Check your inbox for an email from STAR Elections with the subject line:</p>
         <p>

@@ -38,6 +38,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
         try {
           console.log("Submit", formData, values);
           setEditing(false);
+          setTimeout(() => next(), 0);
           setFormData(prevState => {
             return {
               ...prevState,
@@ -74,8 +75,6 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           formData.lastName.toUpperCase() === values.lastName.toUpperCase() &&
           formData.birthYear === new Date(values.birthDate).getFullYear().toString();
         const invalidated = !editing && findByName.response && findByName.response.length < 1;
-
-        if (editing && validated) next();
 
         return (
           <>

@@ -37,6 +37,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
         try {
           console.log("Submit");
           setEditing(false);
+          setTimeout(() => next(), 0);
           setFormData({
             ...formData,
             houseNum: values.houseNum,
@@ -72,8 +73,6 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
           findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
 
         const invalidated = !editing && findByAddress.response && findByAddress.response.length < 1;
-
-        if (editing && validated) next();
 
         return (
           <>
