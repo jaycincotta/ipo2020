@@ -192,11 +192,6 @@ export default function App() {
     GoTo(THANKYOU);
   };
 
-  const GoToSurvey = () => {
-    setStep(REPEAT_VISITOR);
-    window.location = "https://star.vote/startrek/";
-  };
-
   function ResetForm() {
     setVoterId(null);
     setStarId(null);

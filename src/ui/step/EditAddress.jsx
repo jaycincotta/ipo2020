@@ -20,7 +20,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
       .typeError("Please enter your zipcode")
       .required("Zipcode is required")
       .integer()
-      .min(97001)
+      .min(89421)
       .max(97920)
   };
   const inputSchema = Yup.object().shape(validations);
