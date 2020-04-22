@@ -279,7 +279,7 @@ export default function App() {
               findByAddress={findByAddress}
             />
           )}
-          {step === THANKYOU && <Thankyou next={GoToSurvey} />}
+          {step === THANKYOU && <Thankyou next={ResetForm} />}
         </div>
         <p className="version">
           <i>{AppSettings.Version}</i>

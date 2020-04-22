@@ -4,21 +4,44 @@ export default function Welcome({ next }) {
   return (
     <>
       <div className="bigContainerTitle">
-        <h2>Welcome</h2>
+        <h2>Are you eligible to vote in this primary?</h2>
       </div>
       <div className="content">
-        <p>
-          If you are a registered voter in Oregon and as of March 1st were either a member of the Independent Party of
-          Oregon or a non-affiliated voter, you are eligible to vote in the Independent Party of Oregon's May 2020
-          primary.
-        </p>
-        <p>Please complete the following registration process in order to receive an electronic ballot.</p>
-        <p>
-          <b>You may cast your ballot anytime between 8 AM April 28th and 8 PM May 12th</b>
-        </p>
-        <button type="button" onClick={() => next()}>
-          Continue
-        </button>
+        <h2>
+          Please note that to be eligible to vote in this primary, you{" "}
+          <span className="error">
+            <b>MUST</b>
+          </span>
+          ...
+        </h2>
+        <div className="eligibility">
+          <ul className="list1">
+            <li>be registered to vote in Oregon,</li>
+            <li>your voter registration must be active,</li>
+            <li>
+              and, you must <b>either</b> be:
+              <ul className="list2">
+                <li>A registered member of the Independent Party of Oregon, or</li>
+                <li>
+                  A non-affliliated voter not registered with <b>any</b> political party
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div className="closing">
+          <p>
+            If you meet all the eligibility criteria, please complete this registration process to receive your
+            electronic ballot via email.
+          </p>
+          <p>You may cast your ballot anytime between:</p>
+          <p>
+            <b>8 AM April 28th until 8 PM May 12th</b>
+          </p>
+          <button type="button" onClick={() => next()}>
+            I certify that I am eligible to vote in this election
+          </button>
+        </div>
       </div>
     </>
   );

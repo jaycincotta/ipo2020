@@ -61,7 +61,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
         setFieldValue,
         setFieldTouched,
         validateField,
-        //dirty,
+        dirty,
         handleChange,
         handleBlur
         //handleSubmit,
@@ -75,7 +75,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           formData.birthYear === new Date(values.birthDate).getFullYear().toString();
         const invalidated = !editing && findByName.response && findByName.response.length < 1;
 
-        if (validated) next();
+        if (editing && validated) next();
 
         return (
           <>
@@ -113,7 +113,12 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                 <div className="formSpacer" />
                 {validated && <p className="valid">Name and date of birth validated.</p>}
                 {findByName.isLoading && <p className="validating">Validating...</p>}
-                {invalidated && <p className="invalid">Are you sure?</p>}
+                {invalidated && (
+                  <p className="invalid">
+                    We couldn't find you in our list of eligible voters. Are you sure that you entered your name as
+                    listed on your voter record? Are you sure you meet all the eligibility criteria?
+                  </p>
+                )}
                 {!validated && !invalidated && !isSubmitting && !findByName.isLoading && (
                   <button type="submit">Validate</button>
                 )}
@@ -125,12 +130,12 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                 {invalidated && (
                   <>
                     <button type="button" onClick={() => window.open(myVoteURL, "MyVote")}>
-                      Verify Voter Record
+                      Find My Voter Record
                     </button>
 
-                    <button type="button" onClick={() => next()}>
+                    {/* <button type="button" onClick={() => next()}>
                       Yes, I'm sure
-                    </button>
+                    </button> */}
                   </>
                 )}
                 <button type="button" onClick={() => prev()}>

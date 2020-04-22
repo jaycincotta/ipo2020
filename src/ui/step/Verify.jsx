@@ -42,7 +42,9 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
               {voterInfo.City} {voterInfo.ZipCode}
             </h3>
             <div className="formSpacer" />
-            <p>Please click CONFIRM to receive an email with your ballot</p>
+            <p>
+              Please click <b>CONFIRM</b> to receive an email with your ballot
+            </p>
           </>
         )}
         {!validated && !findByName.isLoading && !findByAddress.isLoading && (

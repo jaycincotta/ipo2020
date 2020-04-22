@@ -73,7 +73,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
 
         const invalidated = !editing && findByAddress.response && findByAddress.response.length < 1;
 
-        if (validated) next();
+        if (editing && validated) next();
 
         return (
           <>
@@ -101,7 +101,11 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                 <div className="formSpacer" />
                 {validated && <p className="valid">Address validated.</p>}
                 {findByAddress.isLoading && <p className="validating">Validating...</p>}
-                {invalidated && <p className="invalid">Are you sure?</p>}
+                {invalidated && (
+                  <p className="invalid">
+                    Are you sure, {formData.firstName}? Our voter records show you living at a different address.
+                  </p>
+                )}
                 {!validated && !invalidated && !isSubmitting && !findByAddress.isLoading && (
                   <button type="submit">Validate</button>
                 )}
@@ -113,7 +117,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                 {invalidated && (
                   <>
                     <button type="button" onClick={() => window.open(myVoteURL, "MyVote")}>
-                      Verify Voter Record
+                      Find My Voter Record
                     </button>
                     <button type="button" onClick={() => window.open("http://support.ipo.vote")}>
                       Contact Voter Support

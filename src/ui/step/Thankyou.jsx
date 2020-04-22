@@ -8,9 +8,9 @@ export default function Thankyou({ next }) {
       </div>
       <div className="content">
         <p>We have sent your ballot to the email address you provided.</p>
-        {/* <button type="button" onClick={() => next()}>
-          One more thing...
-        </button> */}
+        <button type="button" onClick={() => next()}>
+          Start again with another voter
+        </button>
       </div>
     </>
   );
