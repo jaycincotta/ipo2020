@@ -32,7 +32,7 @@ const EDIT_NAME = 2;
 const EDIT_ADDRESS = 3;
 const VERIFY = 4;
 const THANKYOU = 5;
-const START_OVER = 6;
+const START_OVER = 9;
 const REPEAT_VISITOR = -1;
 
 export default function App() {
