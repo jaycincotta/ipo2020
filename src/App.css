@@ -129,3 +129,7 @@ blockquote p {
   display: inline;
   font-style: italic;
 }
+sup {
+  vertical-align: super;
+  font-size: smaller;
+}
