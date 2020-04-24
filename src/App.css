@@ -72,6 +72,9 @@ h2 {
   margin-top: 20px;
   margin-bottom: 8px;
 }
+.bigContainerTitle h2 {
+  margin: 8px 0px 6px 8px;
+}
 li {
   margin-top: 4px;
   margin-bottom: 4px;

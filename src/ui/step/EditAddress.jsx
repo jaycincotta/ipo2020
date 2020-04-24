@@ -15,7 +15,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
       .required("House number is required")
       .integer()
       .min(1)
-      .max(99999),
+      .max(999999),
     zipcode: Yup.number()
       .typeError("Please enter your zipcode")
       .required("Zipcode is required")
@@ -81,6 +81,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
             </div>
             <div className="content">
               <Form>
+                <p>You need only enter your House Number (without the name of the street) and Zipcode.</p>
                 <FormField
                   name="houseNum"
                   required

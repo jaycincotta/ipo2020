@@ -63,8 +63,8 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
             </div>
             <div className="content">
               <p>
-                Your ballot will be emailed to you. Your phone number may be used to contact you if needed for
-                credentialing purposes.
+                Your ballot will be emailed to you. Your phone number may be used to contact you, if needed for security
+                purposes.
               </p>
               <Form>
                 <FormField

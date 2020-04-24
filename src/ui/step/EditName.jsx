@@ -82,6 +82,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
               <h2>Enter Name and Birthdate</h2>
             </div>
             <div className="content">
+              <p>Please enter your full first and last name, same as on your voter registration.</p>
               <Form>
                 <FormField
                   name="firstName"
