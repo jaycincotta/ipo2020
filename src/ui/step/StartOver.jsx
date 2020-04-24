@@ -64,8 +64,10 @@ export default function StartOver({ next, done }) {
                     Start again with another voter
                   </button>
                 )}
+                {!values.agreed && <input type="submit" value="Start again with another voter" disabled={true} />}
+
                 <button type="button" onClick={() => done()}>
-                  Complete Registration
+                  Never mind, I'm done
                 </button>
               </>
             );
