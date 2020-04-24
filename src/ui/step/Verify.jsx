@@ -59,6 +59,7 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
               <a
                 href={`mailto:support@equal.vote?subject=VoterId not found for ${formData.firstName} ${formData.lastName}&body=I believe I am eligible to vote in the IPO Primary but have been unable to register online. Thanks in advance for helping me to locate my voter record.%0D%0A%0D%0AMy full name, date of birth and address, as registered with the Oregon Secretary of State, are listed below:%0D%0A%0D%0A`}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 support@equal.vote
               </a>{" "}
