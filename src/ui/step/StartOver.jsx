@@ -10,7 +10,7 @@ export default function StartOver({ next, done }) {
       </div>
       <div className="content">
         <p>
-          The option to "<i>Start again with another voter</i>" has been provided to allow multiple users to share a
+          The option to "<i>Start again with a new voter</i>" has been provided to allow multiple users to share a
           computer, smartphone, or device if needed.
         </p>
 
@@ -61,10 +61,10 @@ export default function StartOver({ next, done }) {
 
                 {values.agreed && (
                   <button type="button" onClick={() => next()}>
-                    Start again with another voter
+                    Start again with a new voter
                   </button>
                 )}
-                {!values.agreed && <input type="submit" value="Start again with another voter" disabled={true} />}
+                {!values.agreed && <input type="submit" value="Start again with a new voter" disabled={true} />}
 
                 <button type="button" onClick={() => done()}>
                   Never mind, I'm done

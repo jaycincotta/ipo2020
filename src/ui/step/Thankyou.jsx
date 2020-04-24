@@ -23,7 +23,7 @@ export default function Thankyou({ next, done, formData }) {
           </b>
         </p>
         <button type="button" onClick={() => next()}>
-          Start again with another voter
+          Start again with a new voter
         </button>
         <button type="button" onClick={() => done()}>
           Complete Registration
