@@ -7,6 +7,7 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import getStarId from "./hooks/getStarId";
 import Welcome from "./ui/step/Welcome";
 import Thankyou from "./ui/step/Thankyou";
+import StartOver from "./ui/step/StartOver";
 import RepeatVoter from "./ui/step/RepeatVoter";
 import EditEmail from "./ui/step/EditEmail";
 import EditName from "./ui/step/EditName";
@@ -30,7 +31,8 @@ const EDIT_EMAIL = 1;
 const EDIT_NAME = 2;
 const EDIT_ADDRESS = 3;
 const VERIFY = 4;
-const THANKYOU = 9;
+const THANKYOU = 5;
+const START_OVER = 6;
 const REPEAT_VISITOR = -1;
 
 export default function App() {
@@ -121,7 +123,23 @@ export default function App() {
   //   }, 10);
   // }
 
+  const denullify = str => (str ? str : "");
+
+  const updateFreshChat = user => {
+    user = user ? user : formData;
+    window.fcWidget.user.setProperties({
+      email: denullify(user.email),
+      phone: denullify(user.phone),
+      firstName: denullify(user.firstName),
+      lastName: denullify(user.lastName),
+      birthDate: denullify(user.birthDate),
+      starId: denullify(user.starId),
+      voterId: denullify(user.voterId)
+    });
+  };
+
   const GoTo = step => {
+    updateFreshChat();
     setStep(step);
   };
 
@@ -192,6 +210,10 @@ export default function App() {
     GoTo(THANKYOU);
   };
 
+  const GoToStartOver = () => {
+    GoTo(START_OVER);
+  };
+
   function ResetForm() {
     setVoterId(null);
     setStarId(null);
@@ -199,6 +221,10 @@ export default function App() {
     window.localStorage.removeItem(CURRENT_STEP_KEY);
     window.localStorage.removeItem(FORM_DATA_KEY);
     setFormData(initialValues);
+    window.fcWidget.user
+      .clear()
+      .then(() => console.log("Freshchat reset"))
+      .catch(() => console.log("Error ignored when Freshchat reset"));
     setStep(WELCOME);
   }
 
@@ -274,7 +300,8 @@ export default function App() {
               findByAddress={findByAddress}
             />
           )}
-          {step === THANKYOU && <Thankyou next={ResetForm} formData={formData} />}
+          {step === THANKYOU && <Thankyou next={GoToStartOver} formData={formData} />}
+          {step === START_OVER && <StartOver next={ResetForm} formData={formData} />}
         </div>
         <p className="version">
           <i>{AppSettings.Version}</i>
