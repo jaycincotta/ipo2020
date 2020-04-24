@@ -2,7 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import FormCheckbox from "../FormCheckbox";
 
-export default function StartOver({ next }) {
+export default function StartOver({ next, done }) {
   return (
     <>
       <div className="bigContainerTitle">
@@ -57,13 +57,16 @@ export default function StartOver({ next }) {
           {({ values }) => {
             return (
               <>
-                <FormCheckbox name="agreed" caption="I understand." />
+                <FormCheckbox name="agreed" caption="&nbsp;I understand." />
 
                 {values.agreed && (
                   <button type="button" onClick={() => next()}>
-                    Continue
+                    Start again with another voter
                   </button>
                 )}
+                <button type="button" onClick={() => done()}>
+                  Complete Registration
+                </button>
               </>
             );
           }}

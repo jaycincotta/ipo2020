@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Thankyou({ next, formData }) {
+export default function Thankyou({ next, done, formData }) {
   return (
     <>
       <div className="bigContainerTitle">
@@ -13,14 +13,20 @@ export default function Thankyou({ next, formData }) {
         <p>Check your inbox for an email from STAR Elections with the subject line:</p>
         <p>
           <b>
-            CONFIDENTIAL: IPO Primary Ballot for {formData.firstName} {formData.lastName}
+            CONFIDENTIAL: IPO Primary Ballot for {formData.firstName}&nbsp;{formData.lastName}
           </b>
         </p>
         <p>
-          Click the ballot link in that email and cast your vote by <b>8 PM on Tuesday, May 12th</b>
+          Click the ballot link in that email and cast your vote by{" "}
+          <b>
+            8&nbsp;PM&nbsp;on&nbsp;Tuesday,&nbsp;May&nbsp;12<sup>th</sup>
+          </b>
         </p>
         <button type="button" onClick={() => next()}>
           Start again with another voter
+        </button>
+        <button type="button" onClick={() => done()}>
+          Complete Registration
         </button>
       </div>
     </>

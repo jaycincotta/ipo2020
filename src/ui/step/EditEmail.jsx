@@ -88,13 +88,13 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
                 <div className="formSpacer" />
                 <FormCheckbox
                   name="optinIpo"
-                  caption="Send me occasional updates from the Independent Party of Oregon"
+                  caption="Send me occasional updates from the Independent&nbsp;Party&nbsp;of&nbsp;Oregon"
                   errors={errors}
                   touched={touched}
                 />
                 <FormCheckbox
                   name="optinStar"
-                  caption="Send me occasional updates from STAR Voting"
+                  caption="Send me occasional updates from STAR&nbsp;Voting"
                   errors={errors}
                   touched={touched}
                 />

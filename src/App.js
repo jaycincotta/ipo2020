@@ -143,6 +143,11 @@ export default function App() {
     setStep(step);
   };
 
+  const CompleteRegistration = () => {
+    GoTo(REPEAT_VISITOR);
+    window.location = "https://www.starvoting.us/";
+  };
+
   const GoToWelcome = () => {
     GoTo(WELCOME);
   };
@@ -265,7 +270,7 @@ export default function App() {
       <Header reset={() => ResetForm()} debug={() => setDebugMode(!debugMode)} />
       <div id="main">
         <div className="bigContainer">
-          {step === REPEAT_VISITOR && <RepeatVoter next={GoToWelcome} />}
+          {step === REPEAT_VISITOR && <RepeatVoter next={GoToVerify} restart={GoToStartOver} formData={formData} />}
           {step === WELCOME && <Welcome next={GoToEditEmail} />}
           {step === EDIT_EMAIL && (
             <EditEmail next={GoToEditName} prev={GoToWelcome} formData={formData} setFormData={setFormData} />
@@ -300,8 +305,8 @@ export default function App() {
               findByAddress={findByAddress}
             />
           )}
-          {step === THANKYOU && <Thankyou next={GoToStartOver} formData={formData} />}
-          {step === START_OVER && <StartOver next={ResetForm} formData={formData} />}
+          {step === THANKYOU && <Thankyou next={GoToStartOver} done={CompleteRegistration} formData={formData} />}
+          {step === START_OVER && <StartOver next={ResetForm} done={CompleteRegistration} formData={formData} />}
         </div>
         <p className="version">
           <i>{AppSettings.Version}</i>

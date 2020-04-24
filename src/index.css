@@ -197,6 +197,7 @@ input {
 }
 .content p {
   margin-top: 12px;
+  margin-right: 12px;
 }
 .annotation {
   font-size: 0.75em;

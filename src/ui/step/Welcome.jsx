@@ -31,7 +31,7 @@ export default function Welcome({ next }) {
           <p>You may cast your ballot anytime between:</p>
           <p>
             <b>
-              8 AM April 28<sup>th</sup> until 8 PM May 12<sup>th</sup>
+              8&nbsp;AM&nbsp;April&nbsp;28<sup>th</sup> until 8&nbsp;PM&nbsp;May&nbsp;12<sup>th</sup>
             </b>
           </p>
           <button type="button" onClick={() => next()}>
