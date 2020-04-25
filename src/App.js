@@ -13,7 +13,6 @@ import EditEmail from "./ui/step/EditEmail";
 import EditName from "./ui/step/EditName";
 import EditAddress from "./ui/step/EditAddress";
 import Verify from "./ui/step/Verify";
-//import MyVoteURL from "./MyVoteURL";
 import FetchViewer from "./ui/FetchViewer";
 import RequestBallot from "./RequestBallot";
 import AppSettings from "./AppSettings";
@@ -167,30 +166,6 @@ export default function App() {
     setStep(WELCOME);
   }
 
-  // const searchByName = useVoterData(
-  //   "SearchByName",
-  //   {
-  //     firstName: formData.firstName ? formData.firstName.substr(0, 1) : "",
-  //     lastName: formData.lastName,
-  //     birthYear: formData.birthYear
-  //   },
-  //   nameAvailable
-  // );
-  // const searchByAddress = useVoterData(
-  //   "SearchByAddress",
-  //   {
-  //     houseNum: formData.houseNum,
-  //     zipcode: formData.zipcode
-  //   },
-  //   addressAvailale
-  // );
-
-  // if (!starId && confirmed && getStarId.response && !getStarId.isLoading) {
-  //   setStarId(getStarId.response.starId);
-  // }
-
-  //const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
-
   if (ArePollsClosed()) {
     return (
       <>
@@ -250,35 +225,12 @@ export default function App() {
         {debugMode && (
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
-            {/* <FetchViewer name="GetStarId" result={getStarId} /> */}
             <FetchViewer name="FindVoter" result={findVoter} />
             <FetchViewer name="FindByName" result={findByName} />
             <FetchViewer name="FindByAddress" result={findByAddress} />
-            {/* <FetchViewer name="SearchByName" result={searchByName} />
-          <FetchViewer name="SearchByAddress" result={searchByAddress} /> */}
           </div>
         )}
       </div>
-      {/* <div id="footer2" className="ui-footer ui-bar-inherit">
-        <a href={myVoteURL} target="MyVote">
-          Verify My Voter Record
-        </a>{" "}
-        | <a href="http://support.ipo.vote">Contact Voter Support</a>|{" "}
-        <span
-          className="buttonLink"
-          href=""
-          onClick={e => {
-            setDebugMode(!debugMode);
-            e.preventDefault();
-          }}
-        >
-          {debugMode ? "Hide" : "Show"} Debug
-        </span>{" "}
-        |{" "}
-        <span className="buttonLink" href="" onClick={() => ResetForm()}>
-          Reset
-        </span>
-      </div> */}
     </div>
   );
 }

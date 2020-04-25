@@ -4,8 +4,8 @@ export default function Header({ reset, debug }) {
   return (
     <div id="pageHeader">
       <PollTestingWarning onClick={debug} />
-      <div style={{ cursor: "pointer" }} onClick={reset}>
-        <img id="headerLogo" src="https://star.ipo.vote/web/images/ipo_logo_notext.png" alt="Logo" />
+      <div>
+        <img id="headerLogo" src="https://star.ipo.vote/web/images/ipo_logo_notext.png" alt="Logo" onClick={reset} />
         <h1>
           Independent Party of Oregon
           <br />
