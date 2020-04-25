@@ -25,8 +25,8 @@ export default function Welcome({ next }) {
         </div>
         <div className="closing">
           <p>
-            If you meet all the eligibility criteria, please complete this registration process to receive your
-            electronic ballot via email.
+            If you met all the eligibility criteria as of March 1<sup>st</sup>, 2020, please complete this registration
+            process to receive your electronic ballot via email.
           </p>
           <p>You may cast your ballot anytime between:</p>
           <p>

@@ -1,7 +1,7 @@
-export default function getStarId(voterId, data) {
-  const url = `https://star.ipo.vote/survey/getstarid/${voterId}/?email=${data.email}&phone=${data.phone}&ipoList=${
-    data.ipoOptIn ? "true" : "false"
-  }&starList=${data.starOptIn ? "true" : "false"}`;
+export default function getStarId(data) {
+  const url = `https://star.ipo.vote/survey/getstarid/${data.voterId}/?email=${data.email}&phone=${
+    data.phone
+  }&ipoList=${data.ipoOptIn ? "true" : "false"}&starList=${data.starOptIn ? "true" : "false"}`;
   const options = {
     method: "get",
     headers: {
@@ -9,7 +9,7 @@ export default function getStarId(voterId, data) {
     }
   };
 
-  console.log("getStarId", voterId, url, options);
+  console.log("getStarId", data.voterId, url, options);
 
   const starId = fetch(url, options)
     .then(response => {

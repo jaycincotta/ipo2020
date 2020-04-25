@@ -58,10 +58,6 @@ export default function App() {
 
   const [debugMode, setDebugMode] = useState(false);
   const [step, setStep] = useLocalStorage(CURRENT_STEP_KEY, WELCOME);
-  const [confirmed, setConfirmed] = useState(false);
-  const [loadingStarId, setLoadingStarId] = useState(false);
-  const [starId, setStarId] = useState(null);
-  const [voterId, setVoterId] = useState(null);
   const [whiteOut, setWhiteout] = useState(false);
 
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
@@ -76,16 +72,6 @@ export default function App() {
     nameAvailable
   );
   const findByName = findVoter;
-  //const findByAddress = findVoter;
-  // const findByName = useVoterData(
-  //   "FindByName",
-  //   {
-  //     firstName: formData.firstName,
-  //     lastName: formData.lastName,
-  //     birthYear: formData.birthYear
-  //   },
-  //   nameAvailable
-  // );
   const findByAddress = useVoterData(
     "FindByAddress",
     {
@@ -95,34 +81,6 @@ export default function App() {
     },
     addressAvailale
   );
-
-  //const getStarId = useStarId(voterId, confirmed);
-
-  if (!voterId && confirmed && findByName.response && !findByName.isLoading && findByName.response[0].VoterId) {
-    setVoterId(findByName.response[0].VoterId);
-  }
-
-  // if (confirmed && !loadingStarId && voterId && !starId && !formData.starId) {
-  //   console.log("Loading?", loadingStarId);
-  //   setLoadingStarId(true);
-  //   setTimeout(() => {
-  //     console.log("Still loading?", loadingStarId);
-  //     getStarId(voterId)
-  //       .then(starId => {
-  //         setStarId(starId);
-  //         console.log(`StarId is ${starId}`);
-  //         setFormData({
-  //           ...formData,
-  //           starId: starId
-  //         });
-  //         setTimeout(() => setLoadingStarId(false), 100);
-  //       })
-  //       .catch(err => {
-  //         console.log("FAIL", err);
-  //         setConfirmed(false);
-  //       });
-  //   }, 10);
-  // }
 
   const denullify = str => (str ? str : "");
 
@@ -170,47 +128,24 @@ export default function App() {
     GoTo(VERIFY);
   };
 
-  const GoToThankyou = () => {
-    const validated =
-      findByAddress.response &&
-      findByAddress.response.length >= 1 &&
-      findByName.response &&
-      findByName.response.length >= 1 &&
-      findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
-    const matches = validated
-      ? findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId))
-      : null;
-    const voterInfo = matches && matches.length === 1 ? matches[0] : null;
-    const voterId1 = voterInfo ? voterInfo.VoterId : "Not Found";
-    console.log("Confirmed?", validated, voterId1, confirmed, loadingStarId, voterId, starId, formData.starId);
+  const GoToThankyou = updates => {
+    const newFormData = { ...formData, ...updates };
+    setFormData(newFormData);
+    console.log("GoToThankyou", newFormData);
 
-    //if (!confirmed && !loadingStarId && voterId && !starId && !formData.starId) {
-    setConfirmed(true);
-    console.log("Loading?", loadingStarId);
-    setLoadingStarId(true);
     setTimeout(() => {
-      console.log("Still loading?", loadingStarId, formData);
-      getStarId(voterId1, formData)
+      getStarId(newFormData)
         .then(starId => {
           console.log("getStarId returned", starId);
-          setStarId(starId);
-          console.log(`StarId is ${starId}`);
-          setFormData(prevState => {
-            const updatedData = {
-              ...prevState,
-              starId: starId
-            };
-            console.log("Requesting email", updatedData);
-            RequestBallot(updatedData)
-              .then(() => console.log("RequestBallot return!"))
-              .catch(err => console.log("RequestBallot FAILED: ", err));
-            return updatedData;
-          });
-          setTimeout(() => setLoadingStarId(false), 100);
+          newFormData.starId = starId;
+          setFormData(newFormData);
+          console.log("Requesting email", newFormData);
+          RequestBallot(newFormData)
+            .then(() => console.log("RequestBallot return!"))
+            .catch(err => console.log("RequestBallot FAILED: ", err));
         })
         .catch(err => {
           console.log("FAIL", err);
-          setConfirmed(false);
         });
     }, 10);
     //}
@@ -222,9 +157,6 @@ export default function App() {
   };
 
   function ResetForm() {
-    setVoterId(null);
-    setStarId(null);
-    setConfirmed(false);
     window.localStorage.removeItem(CURRENT_STEP_KEY);
     window.localStorage.removeItem(FORM_DATA_KEY);
     setFormData(initialValues);

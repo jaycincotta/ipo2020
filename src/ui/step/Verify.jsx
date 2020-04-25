@@ -56,20 +56,14 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
           }}
           onSubmit={async (values, { setSubmitting }) => {
             try {
-              console.log("Submit", values.ipoOptIn, values.starOptIn);
-              setFormData(prevState => {
-                const newState = {
-                  ...prevState,
-                  ipoOptIn: values.ipoOptIn,
-                  starOptIn: values.starOptIn,
-                  voterId: voterInfo.VoterId,
-                  address: voterInfo.Address1,
-                  city: voterInfo.City
-                };
-                console.log("Updating", prevState, newState);
-                return newState;
-              });
-              setTimeout(() => next(), 0);
+              const updates = {
+                ipoOptIn: values.ipoOptIn,
+                starOptIn: values.starOptIn,
+                voterId: voterInfo.VoterId,
+                address: voterInfo.Address1,
+                city: voterInfo.City
+              };
+              setTimeout(() => next(updates), 0);
             } catch (error) {
               console.log("Error", error);
             }
