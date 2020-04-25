@@ -1,4 +1,6 @@
 import React from "react";
+import { Formik, Form } from "formik";
+import FormCheckbox from "../FormCheckbox";
 
 export default function Verify({ next, prev, restart, formData, setFormData, findByName, findByAddress }) {
   const validated =
@@ -13,6 +15,65 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
   //TODO: If we had an multiple matches on name/address/dob, this assumes first one
   const voterInfo = matches && matches.length >= 1 ? matches[0] : null;
   const voterId = voterInfo ? voterInfo.VoterId : "Not Found";
+
+  const form = (
+    <Formik
+      initialValues={{
+        ipoOptIn: formData.ipoOptIn,
+        starOptIn: formData.starOptIn
+      }}
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          console.log("Submit");
+          setFormData(prevState => {
+            return {
+              ...prevState,
+              email: values.email,
+              phone: values.phone,
+              ipoOptIn: values.ipoOptIn,
+              starOptIn: values.starOptIn
+            };
+          });
+          setTimeout(() => next(), 0);
+        } catch (error) {
+          console.log("Error", error);
+        }
+        setSubmitting(false);
+      }}
+    >
+      {({
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        setFieldValue,
+        setFieldTouched,
+        validateField,
+        //dirty,
+        handleChange,
+        handleBlur
+        //handleSubmit,
+        //handleReset,
+      }) => {
+        return (
+          <Form className="optins">
+            <FormCheckbox
+              name="ipoOptIn"
+              caption="Send me occasional updates from the Independent&nbsp;Party&nbsp;of&nbsp;Oregon"
+              errors={errors}
+              touched={touched}
+            />
+            <FormCheckbox
+              name="starOptIn"
+              caption="Send me occasional updates from STAR&nbsp;Voting"
+              errors={errors}
+              touched={touched}
+            />
+          </Form>
+        );
+      }}
+    </Formik>
+  );
 
   console.log("VoterId:", voterId);
   function Confirm(next) {
@@ -47,18 +108,6 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
                   <td className="value">{formData.email}</td>
                 </tr>
                 <tr>
-                  <td className="label">Independent Party of Oregon Mailing&nbsp;List:</td>
-                  <td className="value">
-                    {formData.ipoOptIn ? "Send me occasional updates" : "DO NOT send me any email"}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="label">STAR&nbsp;Voting Mailing&nbsp;List:</td>
-                  <td className="value">
-                    {formData.starOptIn ? "Send me occasional updates" : "DO NOT send me any email"}
-                  </td>
-                </tr>
-                <tr>
                   <td className="label">Phone:</td>
                   <td className="value">{formData.phone}</td>
                 </tr>
@@ -72,6 +121,7 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
                 </tr>
               </tbody>
             </table>
+            {form}
             <div className="formSpacer" />
             <p>
               Please click <b>CONFIRM</b> to receive an email with your ballot
@@ -101,6 +151,7 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
         {(findByName.isLoading || findByAddress.isLoading) && <p>Loading...</p>}
         {validated && (
           <button
+            className="good"
             type="button"
             onClick={e => {
               e.preventDefault();
