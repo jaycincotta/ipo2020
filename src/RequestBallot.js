@@ -5,7 +5,7 @@ export default async function RequestBallot(voterInfo) {
   const request = { ...voterInfo, template: "BallotLink" };
   console.log("REQUESTBALLOT", url, request);
   const result = fetch(
-    `${url}&template=BallotLink&starId=${voterInfo.starId}&email=${voterInfo.email}&firstName=${voterInfo.firstName}&lastName=${voterInfo.lastName}`
+    `${url}&template=ballotLink&starId=${voterInfo.starId}&email=${voterInfo.email}&firstName=${voterInfo.firstName}&lastName=${voterInfo.lastName}`
   )
     // const result = fetch(url, {
     //   method: "post",
