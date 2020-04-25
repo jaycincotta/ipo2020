@@ -103,7 +103,7 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
                   use your data in any manner beyond the officiation of this election. All voter data and documents will
                   be deleted as soon as your vote has been verified and the election is concluded.
                 </p> */}
-                <button type="submit" disabled={isSubmitting}>
+                <button className="good" type="submit" disabled={isSubmitting}>
                   Continue
                 </button>
                 <button type="button" onClick={() => prev()}>

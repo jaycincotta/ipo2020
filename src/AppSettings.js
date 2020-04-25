@@ -1,5 +1,5 @@
 const isProd = true;
-const version = "Version 0.10 beta";
+const version = "Version 0.11 beta";
 const Localhost = "http://localhost:7071";
 const Prodhost = "https://ipo2020-dev-appservice.azurewebsites.net";
 const FunctionKey = "code=RL9gvBjKUqu7L0AL0OZorm/Zt4Jw4JfJFVvynKN93bjFihZBfkaICw==";

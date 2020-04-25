@@ -189,7 +189,7 @@ export default function App() {
     console.log("Loading?", loadingStarId);
     setLoadingStarId(true);
     setTimeout(() => {
-      console.log("Still loading?", loadingStarId);
+      console.log("Still loading?", loadingStarId, formData);
       getStarId(voterId1, formData)
         .then(starId => {
           console.log("getStarId returned", starId);

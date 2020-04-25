@@ -35,7 +35,7 @@ export default function Welcome({ next }) {
             </b>
           </p>
           <button type="button" onClick={() => next()}>
-            I certify that I am eligible to vote in this election
+            Yes, I am eligible to vote in this election
           </button>
         </div>
       </div>

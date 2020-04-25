@@ -11,7 +11,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
 
   const dateRegExp = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
   const validations = {
-    firstName: Yup.string().required("First name is required"),
+    // firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     birthDate: Yup.string()
       .required("Date of birth is required")
@@ -123,7 +123,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
                   <button type="submit">Validate</button>
                 )}
                 {validated && (
-                  <button type="button" onClick={() => next()}>
+                  <button className="good" type="button" onClick={() => next()}>
                     Continue
                   </button>
                 )}

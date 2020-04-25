@@ -110,7 +110,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
                   <button type="submit">Validate</button>
                 )}
                 {validated && (
-                  <button type="button" onClick={() => next()}>
+                  <button className="good" type="button" onClick={() => next()}>
                     Continue
                   </button>
                 )}
