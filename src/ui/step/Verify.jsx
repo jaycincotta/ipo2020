@@ -34,13 +34,44 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
       <div className="content">
         {validated && (
           <>
-            <h3>
-              {voterInfo.FirstName} {voterInfo.LastName}
-              <br />
-              {voterInfo.Address1}
-              <br />
-              {voterInfo.City} {voterInfo.ZipCode}
-            </h3>
+            <table className="confirm">
+              <tbody>
+                <tr>
+                  <td className="label">Name:</td>
+                  <td className="value">
+                    {voterInfo.FirstName} {voterInfo.LastName}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="label">Email:</td>
+                  <td className="value">{formData.email}</td>
+                </tr>
+                <tr>
+                  <td className="label">Independent Party of Oregon Mailing&nbsp;List:</td>
+                  <td className="value">
+                    {formData.ipoOptIn ? "Send me occasional updates" : "DO NOT send me any email"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="label">STAR&nbsp;Voting Mailing&nbsp;List:</td>
+                  <td className="value">
+                    {formData.starOptIn ? "Send me occasional updates" : "DO NOT send me any email"}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="label">Phone:</td>
+                  <td className="value">{formData.phone}</td>
+                </tr>
+                <tr>
+                  <td className="label">Address:</td>
+                  <td className="value">
+                    {voterInfo.Address1}
+                    <br />
+                    {voterInfo.City} {voterInfo.ZipCode}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <div className="formSpacer" />
             <p>
               Please click <b>CONFIRM</b> to receive an email with your ballot

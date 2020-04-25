@@ -4,7 +4,7 @@ export default function RepeatVoter({ next, restart, formData }) {
   return (
     <>
       <div className="bigContainerTitle">
-        <h2>Welcome Back!</h2>
+        <h2>STAR Elections</h2>
       </div>
       <div className="content">
         <p>Hi, {formData.firstName},</p>

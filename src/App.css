@@ -133,3 +133,19 @@ sup {
   vertical-align: super;
   font-size: smaller;
 }
+.confirm {
+  margin-left: 0px;
+}
+.confirm .label {
+  font-size: 13px;
+  width: 150px;
+  padding-bottom: 12px;
+  padding-right: 12px;
+  text-align: right;
+  font-style: italic;
+}
+.confirm .value {
+  padding-bottom: 12px;
+  font-size: 15px;
+  font-weight: bold;
+}

@@ -50,8 +50,8 @@ export default function App() {
     zipcode: "",
     address: "",
     city: "",
-    optinIpo: false,
-    optinStar: false
+    ipoOptIn: false,
+    starOptIn: false
   };
 
   const [formData, setFormData] = useLocalStorage(FORM_DATA_KEY, initialValues);
@@ -62,6 +62,7 @@ export default function App() {
   const [loadingStarId, setLoadingStarId] = useState(false);
   const [starId, setStarId] = useState(null);
   const [voterId, setVoterId] = useState(null);
+  const [whiteOut, setWhiteout] = useState(false);
 
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
   const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
@@ -144,6 +145,7 @@ export default function App() {
   };
 
   const CompleteRegistration = () => {
+    setWhiteout(true);
     GoTo(REPEAT_VISITOR);
     window.location = "https://www.starvoting.us/";
   };
@@ -188,7 +190,7 @@ export default function App() {
     setLoadingStarId(true);
     setTimeout(() => {
       console.log("Still loading?", loadingStarId);
-      getStarId(voterId1, formData.email)
+      getStarId(voterId1, formData)
         .then(starId => {
           console.log("getStarId returned", starId);
           setStarId(starId);
@@ -265,6 +267,8 @@ export default function App() {
       </>
     );
   }
+  if (whiteOut) return "";
+
   return (
     <div id="page">
       <Header reset={() => ResetForm()} debug={() => setDebugMode(!debugMode)} />

@@ -1,5 +1,5 @@
-export default function getStarId(voterId, email) {
-  const url = `https://star.ipo.vote/survey/getstarid/${voterId}/?email=${email}`;
+export default function getStarId(voterId, data) {
+  const url = `https://star.ipo.vote/survey/getstarid/${voterId}/?email=${data.email}&phone=${data.phone}&ipoList=${data.ipoOptIn}&starList=${data.starOptIn}`;
   const options = {
     method: "get",
     headers: {

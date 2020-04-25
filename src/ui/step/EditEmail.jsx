@@ -19,8 +19,8 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
       initialValues={{
         email: formData.email,
         phone: formData.phone,
-        optinIpo: formData.optinIpo,
-        optinStar: formData.optinStar
+        ipoOptIn: formData.ipoOptIn,
+        starOptIn: formData.starOptIn
       }}
       validationSchema={inputSchema}
       onSubmit={async (values, { setSubmitting }) => {
@@ -31,8 +31,8 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
               ...prevState,
               email: values.email,
               phone: values.phone,
-              optinIpo: values.optinIpo,
-              optinStar: values.optinStar
+              ipoOptIn: values.ipoOptIn,
+              starOptIn: values.starOptIn
             };
           });
           setTimeout(() => next(), 0);
@@ -87,13 +87,13 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
                 />
                 <div className="formSpacer" />
                 <FormCheckbox
-                  name="optinIpo"
+                  name="ipoOptIn"
                   caption="Send me occasional updates from the Independent&nbsp;Party&nbsp;of&nbsp;Oregon"
                   errors={errors}
                   touched={touched}
                 />
                 <FormCheckbox
-                  name="optinStar"
+                  name="starOptIn"
                   caption="Send me occasional updates from STAR&nbsp;Voting"
                   errors={errors}
                   touched={touched}
