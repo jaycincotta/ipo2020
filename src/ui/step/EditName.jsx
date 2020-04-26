@@ -7,6 +7,7 @@ import MyVoteURL from "../../MyVoteURL";
 export default function EditName({ next, prev, formData, setFormData, findByName }) {
   console.log("EditName", formData);
   const [editing, setEditing] = useState(false);
+  const [autoContinue, setAutoContinue] = useState(false);
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   const dateRegExp = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
@@ -27,6 +28,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
       validate={(values, props) => {
         console.log("validate", values);
         setEditing(true);
+        setAutoContinue(false);
       }}
       initialValues={{
         firstName: formData.firstName,
@@ -38,7 +40,6 @@ export default function EditName({ next, prev, formData, setFormData, findByName
         try {
           console.log("Submit", formData, values);
           setEditing(false);
-          setTimeout(() => next(), 0);
           setFormData(prevState => {
             return {
               ...prevState,
@@ -48,6 +49,7 @@ export default function EditName({ next, prev, formData, setFormData, findByName
               birthYear: `${new Date(values.birthDate).getFullYear()}`
             };
           });
+          setAutoContinue(true);
         } catch (error) {
           console.log("Error", error);
         }
@@ -75,6 +77,10 @@ export default function EditName({ next, prev, formData, setFormData, findByName
           formData.lastName.toUpperCase() === values.lastName.toUpperCase() &&
           formData.birthYear === new Date(values.birthDate).getFullYear().toString();
         const invalidated = !editing && findByName.response && findByName.response.length < 1;
+
+        if (validated && autoContinue) {
+          setTimeout(() => next(), 0);
+        }
 
         return (
           <>

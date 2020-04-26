@@ -1,4 +1,5 @@
 import React from "react";
+import Eligibility from "../Eligibility";
 
 export default function Welcome({ next }) {
   return (
@@ -7,22 +8,7 @@ export default function Welcome({ next }) {
         <h2>Are you eligible to vote in this primary?</h2>
       </div>
       <div className="content">
-        <h2>Please note that to be eligible to vote in this primary:</h2>
-        <div className="eligibility">
-          <ul className="list1">
-            <li>You must be registered to vote in Oregon,</li>
-            <li>Your voter registration must be active, and</li>
-            <li>
-              You must <b>either</b> be:
-              <ul className="list2">
-                <li>A registered member of the Independent Party of Oregon, or</li>
-                <li>
-                  A non-affliliated voter not registered with <b>any</b> political party.
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+        <Eligibility />
         <div className="closing">
           <p>
             If you met all the eligibility criteria as of March 1<sup>st</sup>, 2020, please complete this registration

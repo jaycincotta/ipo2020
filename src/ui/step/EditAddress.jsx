@@ -7,6 +7,7 @@ import MyVoteURL from "../../MyVoteURL";
 export default function EditAddress({ next, prev, formData, setFormData, findByName, findByAddress }) {
   console.log("EditAddress", formData);
   const [editing, setEditing] = useState(false);
+  const [autoContinue, setAutoContinue] = useState(false);
   const myVoteURL = MyVoteURL(formData.firstName, formData.lastName, formData.birthDate);
 
   const validations = {
@@ -30,6 +31,7 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
       validate={(values, props) => {
         console.log("validate", values);
         setEditing(true);
+        setAutoContinue(false);
       }}
       initialValues={{ houseNum: formData.houseNum, zipcode: formData.zipcode }}
       validationSchema={inputSchema}
@@ -37,12 +39,12 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
         try {
           console.log("Submit");
           setEditing(false);
-          setTimeout(() => next(), 0);
           setFormData({
             ...formData,
             houseNum: values.houseNum,
             zipcode: values.zipcode
           });
+          setAutoContinue(true);
         } catch (error) {
           console.log("Error", error);
         }
@@ -72,7 +74,12 @@ export default function EditAddress({ next, prev, formData, setFormData, findByN
           findByName.response.length >= 1 &&
           findByAddress.response.filter(a => findByName.response.some(n => a.VoterId === n.VoterId)).length >= 1;
 
-        const invalidated = !editing && findByAddress.response && findByAddress.response.length < 1;
+        const invalidated =
+          !editing && values.houseNum && values.zipcode && findByAddress.response && findByAddress.response.length < 1;
+
+        if (validated && autoContinue) {
+          setTimeout(() => next(), 0);
+        }
 
         return (
           <>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import FormCheckbox from "../FormCheckbox";
+import Eligibility from "../Eligibility";
 
 export default function Verify({ next, prev, restart, formData, setFormData, findByName, findByAddress }) {
   const validated =
@@ -95,8 +96,26 @@ export default function Verify({ next, prev, restart, formData, setFormData, fin
                     </h1>
                     <div className="formSpacer" />
                     <p>
-                      You are not in our list of eligible voters. If you believe you should be, and you are positive
-                      that you were registered Ind or NAV by March 1st, please email{" "}
+                      The Independent Party of Oregon (IPO) has opened the party's 2020 primary election to the state's
+                      900,000 non-affiliated voters, in addition to the Independent party's 125,000 members registered
+                      by March 1st, 2020.
+                    </p>
+                    <Eligibility />
+                    <h2>You are not in our list of eligible voters. Common reasons include:</h2>
+                    <div className="eligibility">
+                      <ul className="list1">
+                        <li>Registered with another party (Democrat, Republican, etc)</li>
+                        <li>Inactive voter registration status</li>
+                        <li>Registered to vote under a different spelling of your name</li>
+                        <li>Registered to vote under a different residence address</li>
+                        <li>
+                          Registration not active by the March 1<sup>st</sup> deadline
+                        </li>
+                      </ul>
+                    </div>
+                    <p>
+                      If you believe you should eligible to vote in this primary, and you are positive that you were
+                      registered Ind or NAV by March 1<sup>st</sup>, please email{" "}
                       <a
                         href={`mailto:support@equal.vote?subject=VoterId not found for ${formData.firstName} ${formData.lastName}&body=I believe I am eligible to vote in the IPO Primary but have been unable to register online. Thanks in advance for helping me to locate my voter record.%0D%0A%0D%0AMy full name, date of birth and address, as registered with the Oregon Secretary of State, are listed below:%0D%0A%0D%0A`}
                         target="_blank"

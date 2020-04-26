@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./index.css";
 import "./App.css";
-import useVoterData from "./hooks/useVoterData";
 import useFindVoter from "./hooks/useFindVoter";
 import useLocalStorage from "./hooks/useLocalStorage";
 import getStarId from "./hooks/getStarId";
@@ -60,7 +59,6 @@ export default function App() {
   const [whiteOut, setWhiteout] = useState(false);
 
   const nameAvailable = formData.firstName && formData.lastName && formData.birthYear;
-  const addressAvailale = formData.houseNum && formData.zipcode && formData.birthYear;
 
   const findVoter = useFindVoter(
     {
@@ -70,16 +68,12 @@ export default function App() {
     },
     nameAvailable
   );
+  const filteredVoters = findVoter.response
+    ? // eslint-disable-next-line
+      findVoter.response.filter(v => v.HouseNum == formData.houseNum && v.ZipCode == formData.zipcode)
+    : [];
   const findByName = findVoter;
-  const findByAddress = useVoterData(
-    "FindByAddress",
-    {
-      houseNum: formData.houseNum,
-      zipcode: formData.zipcode,
-      birthYear: formData.birthYear
-    },
-    addressAvailale
-  );
+  const findByAddress = { error: null, isLoading: false, response: filteredVoters };
 
   const denullify = str => (str ? str : "");
 
@@ -226,8 +220,6 @@ export default function App() {
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
             <FetchViewer name="FindVoter" result={findVoter} />
-            <FetchViewer name="FindByName" result={findByName} />
-            <FetchViewer name="FindByAddress" result={findByAddress} />
           </div>
         )}
       </div>
