@@ -4,8 +4,9 @@ export default async function RequestBallot(voterInfo) {
   const url = AppSettings.RequestBallot;
   const request = { ...voterInfo, template: "BallotLink" };
   console.log("REQUESTBALLOT", url, request);
+  const email = voterInfo.email.replace("+", "%2B");
   const result = fetch(
-    `${url}&template=ballotLink&starId=${voterInfo.starId}&email=${voterInfo.email}&firstName=${voterInfo.firstName}&lastName=${voterInfo.lastName}`
+    `${url}&template=ballotLink&starId=${voterInfo.starId}&email=${email}&firstName=${voterInfo.firstName}&lastName=${voterInfo.lastName}`
   )
     // const result = fetch(url, {
     //   method: "post",

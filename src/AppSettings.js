@@ -1,12 +1,14 @@
 const isProd = true;
-const version = "Version 0.13 beta";
+const version = "Version 0.14 beta";
 const Localhost = "http://localhost:7071";
 const Prodhost = "https://ipo2020-dev-appservice.azurewebsites.net";
 const FunctionKey = "code=RL9gvBjKUqu7L0AL0OZorm/Zt4Jw4JfJFVvynKN93bjFihZBfkaICw==";
+
 const ApiMethod = method => `${isProd ? Prodhost : Localhost}/api/${method}?${FunctionKey}`;
 
 const AppSettings = {
   Version: version,
+  FindVoter: ApiMethod("FindVoter"),
   RequestBallot: ApiMethod("SendEmail")
 };
 

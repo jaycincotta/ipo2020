@@ -1,9 +1,8 @@
 export default function getStarId(data) {
-  const url = `https://star.ipo.vote/survey/getstarid/${data.voterId}/?email=${data.email}&phone=${
-    data.phone
-  }&ipoList=${data.ipoOptIn ? "true" : "false"}&starList=${data.starOptIn ? "true" : "false"}&birthDate=${
-    data.birthDate
-  }`;
+  const email = data.email.replace("+", "%2B");
+  const url = `https://star.ipo.vote/survey/getstarid/${data.voterId}/?email=${email}&phone=${data.phone}&ipoList=${
+    data.ipoOptIn ? "true" : "false"
+  }&starList=${data.starOptIn ? "true" : "false"}&birthDate=${data.birthDate}`;
   const options = {
     method: "get",
     headers: {
@@ -20,6 +19,11 @@ export default function getStarId(data) {
         throw response;
       }
       return response.json();
+    })
+    .then(json => {
+      if (json.error) {
+        throw new Error("Not Authorized");
+      }
     })
     .then(json => {
       return json.starId;
