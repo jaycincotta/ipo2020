@@ -7,7 +7,8 @@ export default function StarLogin() {
   urlencoded.append("pass", "PCj4DsvyzADn9rY");
   urlencoded.append("authLength", "0");
   var options = {
-    method: "POST",
+		method: "POST",
+		credentials: 'include'
     headers: myHeaders,
     body: urlencoded,
     redirect: "follow"
