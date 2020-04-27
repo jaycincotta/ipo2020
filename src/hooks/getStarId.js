@@ -24,6 +24,7 @@ export default function getStarId(data) {
       return response.json();
     })
     .then(json => {
+      console.log("JSON", json);
       if (json.error) {
         throw new Error("Not Authorized");
       }
