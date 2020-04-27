@@ -5,6 +5,7 @@ export default function getStarId(data) {
   }&starList=${data.starOptIn ? "true" : "false"}&birthDate=${data.birthDate}`;
   const options = {
     method: "get",
+    credentials: "include",
     headers: {
       Accept: "application/json"
     }

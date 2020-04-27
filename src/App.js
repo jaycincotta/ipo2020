@@ -18,6 +18,7 @@ import AppSettings from "./AppSettings";
 import PollsClosed from "./ui/step/PollsClosed";
 import { ArePollsClosed } from "./ui/PollStatus";
 import Header from "./ui/Header";
+import { useCookies } from "react-cookie";
 
 const CURRENT_STEP_KEY = "ipo2020-currentStep";
 const FORM_DATA_KEY = "ipo2020-formData";
@@ -34,6 +35,13 @@ const START_OVER = 9;
 const REPEAT_VISITOR = -1;
 
 export default function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(["authID", "authToken"]);
+  setCookie("authID", 4);
+  setCookie(
+    "authToken",
+    "2ab184496bd92a5508ad091ae7e0cca4b1128fa371efaa8ec5ef8e5c16314b38df278b655a887eff77d321d91f7624bb497cfe610e584d6f57d48c78fe3d55e0"
+  );
+
   // Voter Data
   const initialValues = {
     starId: "",
@@ -141,7 +149,6 @@ export default function App() {
           console.log("FAIL", err);
         });
     }, 10);
-    //}
     GoTo(THANKYOU);
   };
 
