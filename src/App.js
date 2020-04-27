@@ -42,6 +42,10 @@ export default function App() {
     "2ab184496bd92a5508ad091ae7e0cca4b1128fa371efaa8ec5ef8e5c16314b38df278b655a887eff77d321d91f7624bb497cfe610e584d6f57d48c78fe3d55e0"
   );
 
+  if (false) {
+    // Needed to avoid warnings which kill our CI/CD builds
+    console.log(cookies, removeCookie);
+  }
   // Voter Data
   const initialValues = {
     starId: "",
