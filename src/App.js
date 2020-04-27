@@ -18,7 +18,6 @@ import AppSettings from "./AppSettings";
 import PollsClosed from "./ui/step/PollsClosed";
 import { ArePollsClosed } from "./ui/PollStatus";
 import Header from "./ui/Header";
-import Cookies from "js-cookie";
 
 const CURRENT_STEP_KEY = "ipo2020-currentStep";
 const FORM_DATA_KEY = "ipo2020-formData";
@@ -127,11 +126,6 @@ export default function App() {
     setFormData(newFormData);
     console.log("GoToThankyou", newFormData);
 
-    // Cookies.set("authID", 4);
-    // Cookies.set(
-    //   "authToken",
-    //   "2ab184496bd92a5508ad091ae7e0cca4b1128fa371efaa8ec5ef8e5c16314b38df278b655a887eff77d321d91f7624bb497cfe610e584d6f57d48c78fe3d55e0"
-    // );
     setTimeout(() => {
       getStarId(newFormData)
         .then(starId => {
