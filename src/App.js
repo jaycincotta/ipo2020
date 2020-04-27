@@ -127,11 +127,10 @@ export default function App() {
     setFormData(newFormData);
     console.log("GoToThankyou", newFormData);
 
-    Cookies.set("authID", 4, { domain: AppSettings.StarDomain });
+    Cookies.set("authID", 4);
     Cookies.set(
       "authToken",
-      "2ab184496bd92a5508ad091ae7e0cca4b1128fa371efaa8ec5ef8e5c16314b38df278b655a887eff77d321d91f7624bb497cfe610e584d6f57d48c78fe3d55e0",
-      { domain: AppSettings.StarDomain }
+      "2ab184496bd92a5508ad091ae7e0cca4b1128fa371efaa8ec5ef8e5c16314b38df278b655a887eff77d321d91f7624bb497cfe610e584d6f57d48c78fe3d55e0"
     );
     setTimeout(() => {
       getStarId(newFormData)
