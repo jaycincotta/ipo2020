@@ -1,6 +1,8 @@
+import AppSettings from "../AppSettings";
+
 export default function getStarId(data) {
   const email = data.email.replace("+", "%2B");
-  const url = `https://star.ipo.vote/survey/getstarid/${data.voterId}/?email=${email}&phone=${data.phone}&ipoList=${
+  const url = `{${AppSettings.GetStarId}/${data.voterId}/?email=${email}&phone=${data.phone}&ipoList=${
     data.ipoOptIn ? "true" : "false"
   }&starList=${data.starOptIn ? "true" : "false"}&birthDate=${data.birthDate}`;
   const options = {
