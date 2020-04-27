@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import StarLogin from "./hooks/StarLogin";
 
+StarLogin();
 ReactDOM.render(
   <React.StrictMode>
     <App />

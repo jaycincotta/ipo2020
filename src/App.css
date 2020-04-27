@@ -92,6 +92,10 @@ li {
 .list2 {
   margin-left: 20px;
 }
+.list3 {
+  margin-top: 10px;
+  margin-left: 30px;
+}
 .eligibility {
   font-size: 15px;
   font-style: italic;
@@ -156,4 +160,19 @@ sup {
 }
 .optins {
   margin-left: 24px;
+}
+.mainMenu {
+  margin-top: 14px;
+  margin-right: 16px;
+  float: right;
+  color: white;
+  font-weight: bold;
+  font-family: verdana, tahoma, helvetica, sans-serif;
+  font-size: 14px;
+}
+.mainMenu a:link,
+.mainMenu a:active,
+.mainMenu a:visited,
+.mainMenu a:hover {
+  color: white;
 }

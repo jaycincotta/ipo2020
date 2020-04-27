@@ -10,6 +10,14 @@ export default function Thankyou({ next, done, formData }) {
         <p>
           We have sent your ballot to <b>{formData.email}</b>
         </p>
+        <p>
+          This ballot contains a non-binding presidential preference poll. It also contains binding elections for
+          statewide offices, which will determine ballot access and elect the Independent Party nominees:
+        </p>
+        <ul className="list3">
+          <li>Secretary of State Election</li>
+          <li>State Treasurer Election</li>
+        </ul>
         <p>Check your inbox for an email from STAR Elections with the subject line:</p>
         <p>
           <b>
