@@ -23,7 +23,6 @@ export default function FormField({
       </label>
       <ErrorMessage name={name} className="error" component="div" />
       <Field
-        className={className}
         component={component || "input"}
         type={type || "text"}
         name={name}
