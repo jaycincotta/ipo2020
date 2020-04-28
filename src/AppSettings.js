@@ -9,7 +9,7 @@ const ApiMethod = method => `${isProd ? Prodhost : Localhost}/api/${method}?${Fu
 const AppSettings = {
   Version: version,
   FindVoter: ApiMethod("FindVoter"),
-  RequestBallot: ApiMethod("SendEmail"),
+  RequestBallot: ApiMethod("RequestBallot"),
   StarDomain: StarDomain,
   GetStarId: `https://${StarDomain}/survey/getstarid`
 };
