@@ -69,6 +69,7 @@ export default function EditEmail({ next, prev, formData, setFormData }) {
               <Form>
                 <FormField
                   name="email"
+                  className="email"
                   required
                   caption="Email Address"
                   placeholder="Email"

@@ -176,3 +176,6 @@ sup {
 .mainMenu a:hover {
   color: white;
 }
+.email {
+  width: 350px;
+}
