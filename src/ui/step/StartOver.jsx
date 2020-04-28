@@ -16,9 +16,11 @@ export default function StartOver({ next, done }) {
 
         <p className="error">
           <b>WARNING</b>: Attempting to submit multiple ballots for the same voter, or attempting to submit a ballot in
-          someone else's name is voter fraud.
+          someone else's name is fraud.
+          <br />
+          &nbsp;
         </p>
-
+        {/* 
         <blockquote>
           <p>
             <b>ORS 260.715 Prohibited conduct</b>
@@ -48,7 +50,7 @@ export default function StartOver({ next, done }) {
             with the actual intent to purchase, for money or other valuable consideration, any official ballot, [or]
             replacement ballot..."
           </p>
-        </blockquote>
+        </blockquote> */}
         <Formik
           initialValues={{
             agreed: false
