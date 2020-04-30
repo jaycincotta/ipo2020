@@ -91,7 +91,7 @@ export default function App() {
   };
 
   const GoTo = step => {
-    updateFreshChat();
+    updateFreshChat(formData);
     setStep(step);
   };
 

@@ -30,6 +30,10 @@ export default function Thankyou({ next, done, formData }) {
             8&nbsp;PM&nbsp;on&nbsp;Tuesday,&nbsp;May&nbsp;12<sup>th</sup>
           </b>
         </p>
+        <p>
+          <b>NOTE</b>: If you don't see the email in your inbox within a couple minutes, check your spam filter, add
+          support@equal.vote to your contact list, and come back to this page to resend ballot if needed.
+        </p>
         <button type="button" onClick={() => next()}>
           Start again with a new voter
         </button>
