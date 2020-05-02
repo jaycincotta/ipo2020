@@ -213,8 +213,15 @@ export default function App() {
           {step === START_OVER && <StartOver next={ResetForm} done={CompleteRegistration} formData={formData} />}
         </div>
         <p className="version">
-          <i>{AppSettings.Version}</i>
+          <i>
+            {AppSettings.Version}
+            {" | "}
+            <a className="privacy" href="https://bit.ly/ipo2020-privacy" target="privacy">
+              Privacy Policy
+            </a>
+          </i>
         </p>
+
         {debugMode && (
           <div className="content">
             <pre>formData: {JSON.stringify(formData, null, 2)}</pre>
