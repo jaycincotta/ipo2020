@@ -2,9 +2,15 @@ import AppSettings from "../AppSettings";
 
 export default function getStarId(data) {
   const email = data.email.replace("+", "%2B");
+  const dob = data.birthDate
+    .toLocaleString()
+    .split(/\D/)
+    .slice(0, 3)
+    .map(num => num.padStart(2, "0"))
+    .join("/");
   const url = `${AppSettings.GetStarId}/${data.voterId}/?email=${email}&phone=${data.phone}&ipoList=${
     data.ipoOptIn ? "true" : "false"
-  }&starList=${data.starOptIn ? "true" : "false"}&birthDate=${data.birthDate}`;
+  }&starList=${data.starOptIn ? "true" : "false"}&birthDate=${dob}`;
   const options = {
     method: "get",
     credentials: "include",
