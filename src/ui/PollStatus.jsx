@@ -1,7 +1,7 @@
 import React from "react";
 
 const PollsOpen = Date.parse("28 Apr 2020 08:00:00 PDT");
-const PollsClose = new Date("12 May 2020 20:00:00 PDT");
+const PollsClose = new Date("19 May 2020 20:00:00 PDT");
 
 const OPEN = "OPEN";
 const CLOSED = "CLOSED";

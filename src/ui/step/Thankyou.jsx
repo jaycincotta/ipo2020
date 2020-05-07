@@ -27,7 +27,7 @@ export default function Thankyou({ next, done, formData }) {
         <p>
           Click the ballot link in that email and cast your vote by{" "}
           <b>
-            8&nbsp;PM&nbsp;on&nbsp;Tuesday,&nbsp;May&nbsp;12<sup>th</sup>
+            8&nbsp;PM&nbsp;on&nbsp;Tuesday,&nbsp;May&nbsp;19<sup>th</sup>
           </b>
         </p>
         <p>

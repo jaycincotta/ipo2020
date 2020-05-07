@@ -9,7 +9,9 @@ export default function PollsClosed({ next }) {
             <h2>The election has ended</h2>
           </div>
           <div className="content">
-            <p>The 2020 Primary for the Independent Party of Oregon ended at 8 PM PDT on May 12.</p>
+            <p>
+              The 2020 Primary for the Independent Party of Oregon ended at 8 PM PDT on May 19<sup>th</sup>.
+            </p>
           </div>
         </div>
       </div>
