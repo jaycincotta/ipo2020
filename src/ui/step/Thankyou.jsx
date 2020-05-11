@@ -1,14 +1,14 @@
 import React from "react";
 
-export default function Thankyou({ next, done, formData }) {
+export default function Thankyou({ next, done, vote, formData }) {
   return (
     <>
       <div className="bigContainerTitle">
-        <h2>Thank You, {formData.firstName}!</h2>
+        <h2>Thanks for registering, {formData.firstName}!</h2>
       </div>
       <div className="content">
         <p>
-          We have sent your ballot to <b>{formData.email}</b>
+          You can vote immediately, but we have also sent an email with your ballot to <b>{formData.email}</b>
         </p>
         <p>
           This ballot contains a non-binding presidential preference poll. It also contains binding elections for
@@ -34,6 +34,10 @@ export default function Thankyou({ next, done, formData }) {
           <b>NOTE</b>: If you don't see the email in your inbox within a couple minutes, check your spam filter, add
           support@equal.vote to your contact list, and come back to this page to resend ballot if needed.
         </p>
+
+        <button type="button" className="good" onClick={() => vote()}>
+          Vote Now!
+        </button>
         <button type="button" onClick={() => next()}>
           Start again with a new voter
         </button>

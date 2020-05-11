@@ -144,6 +144,11 @@ export default function App() {
     GoTo(THANKYOU);
   };
 
+  const VoteNow = () => {
+    const url = `https://star.ipo.vote/2020primary/${formData.starId}`;
+    window.location = url;
+  };
+
   const GoToStartOver = () => {
     GoTo(START_OVER);
   };
@@ -209,7 +214,9 @@ export default function App() {
               findByAddress={findByAddress}
             />
           )}
-          {step === THANKYOU && <Thankyou next={GoToStartOver} done={CompleteRegistration} formData={formData} />}
+          {step === THANKYOU && (
+            <Thankyou next={GoToStartOver} done={CompleteRegistration} vote={VoteNow} formData={formData} />
+          )}
           {step === START_OVER && <StartOver next={ResetForm} done={CompleteRegistration} formData={formData} />}
         </div>
         <p className="version">
